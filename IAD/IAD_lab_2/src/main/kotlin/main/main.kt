@@ -1,8 +1,8 @@
 package main
 
-import util.area
+import util.Area
 import util.batch
-import util.gdp
+import util.Gdp
 import util.getFromResources
 import java.io.File
 
@@ -28,7 +28,7 @@ fun File.parseArea() = this.readLines()
         .filter(String::isNotEmpty)
         .asSequence()
         .batch(3)
-        .map { area(it[0].toInt(), it[1], it[2].replace(" ", "").toDouble()) }
+        .map { Area(it[0].toInt(), it[1], it[2].replace(" ", "").toDouble()) }
         .toList()
 
 fun File.parseGdp() = this.readLines()
@@ -39,7 +39,7 @@ fun File.parseGdp() = this.readLines()
         .batch(2)
         .map {
             val list = it[0].split(Regex("[ \t\n]+"))
-            gdp(list[0].toInt(), list[1], it[1].replace(" ", "").toDouble())
+            Gdp(list[0].toInt(), list[1], it[1].replace(" ", "").toDouble())
         }
         .toList()
 
