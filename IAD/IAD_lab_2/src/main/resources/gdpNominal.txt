@@ -1,0 +1,212 @@
+1	Flag of the United States.svg США	18518
+2	Flag of the People's Republic of China.svg КНР	11158
+3	Flag of Japan.svg Япония	4383
+4	Flag of Germany.svg Германия	3363
+5	Flag of the United Kingdom.svg Великобритания	2858
+6	Flag of France.svg Франция	2418
+7	Индия Индия	2116
+8	Flag of Italy.svg Италия	1821
+9	Flag of Brazil.svg Бразилия	1772
+10	Flag of Canada.svg Канада	1553
+11	Flag of South Korea.svg Республика Корея	1378
+12	Flag of Russia.svg Россия	1326
+13	Flag of Australia.svg Австралия	1230
+14	Flag of Spain.svg Испания	1381
+15	Flag of Mexico.svg Мексика	1295
+16	Flag of Indonesia.svg Индонезия	889
+17	Flag of the Netherlands.svg Нидерланды	879
+18	Flag of Turkey.svg Турция	798
+19	Flag of Saudi Arabia.svg Саудовская Аравия	752
+20	Flag of Switzerland.svg Швейцария	701
+21	Flag of Sweden.svg Швеция	571
+22	Flag of Nigeria.svg Нигерия	568
+23	Flag of Poland.svg Польша	545
+24	Flag of Argentina.svg Аргентина	543
+25	Flag of Belgium (civil).svg Бельгия	532
+26	Flag of Venezuela (state).svg Венесуэла	510
+27	Flag of Norway.svg Норвегия	501
+28	Flag of Austria.svg Австрия	437
+29	Flag of Iran.svg Иран	425
+30	Flag of Thailand.svg Таиланд	405
+31	Flag of the United Arab Emirates.svg ОАЭ	399
+32	Flag of Colombia.svg Колумбия	378
+33	Flag of South Africa.svg ЮАР	350
+34	Flag of Denmark.svg Дания	346
+35	Flag of Malaysia.svg Малайзия	327
+36	Flag of Singapore.svg Сингапур	308
+37	Flag of Israel.svg Израиль	304
+—	Flag of Hong Kong.svg Гонконг (КНР)	291
+38	Flag of the Philippines.svg Филиппины	285
+39	Flag of Egypt.svg Египет	282
+40	Flag of Finland.svg Финляндия	272
+41	Flag of Chile.svg Чили	258
+42	Flag of Pakistan.svg Пакистан	251
+43	Флаг Ирландии Ирландия	251
+44	Flag of Greece.svg Греция	236
+45	Flag of Portugal.svg Португалия	230
+46	Flag of Iraq.svg Ирак	225
+47	Flag of Kazakhstan.svg Казахстан	216
+48	Flag of Algeria.svg Алжир	214
+49	Flag of Qatar.svg Катар	212
+50	Flag of the Czech Republic.svg Чехия	205
+51	Flag of Peru (state).svg Перу	202
+52	Flag of Romania.svg Румыния	199
+53	Flag of New Zealand.svg Новая Зеландия	199
+54	Flag of Vietnam.svg Вьетнам	186
+55	Flag of Bangladesh.svg Бангладеш	173
+56	Flag of Kuwait.svg Кувейт	164
+57	Flag of Angola.svg Ангола	147
+58	Flag of Hungary.svg Венгрия	138
+59	Flag of Ukraine.svg Украина	132
+60	Flag of Morocco.svg Марокко	110
+—	Flag of Puerto Rico.svg Пуэрто-Рико (США)	104
+61	Flag of Ecuador.svg Эквадор	101
+62	Flag of Slovakia.svg Словакия	100
+63	Flag of Cuba.svg Куба	82,8
+64	Flag of Sudan.svg Судан	81,9
+65	Flag of Oman.svg Оман	81,8
+66	Flag of Belarus.svg Белоруссия	76,1
+67	Flag of Azerbaijan.svg Азербайджан	75,2
+68	Flag of Sri Lanka.svg Шри-Ланка	74,9
+69	Flag of Myanmar.svg Мьянма	66,5
+70	Flag of Luxembourg.svg Люксембург	64,9
+71	Flag of the Dominican Republic.svg Доминиканская Республика	64,0
+72	Flag of Uzbekistan.svg Узбекистан	63,0
+73	Flag of Kenya.svg Кения	60,9
+74	Flag of Guatemala.svg Гватемала	58,8
+75	Flag of Uruguay.svg Уругвай	57,5
+76	Flag of Croatia.svg Хорватия	57,1
+77	Flag of Bulgaria.svg Болгария	56,7
+—	Flag of Macau.svg Макао (КНР)	55,5
+78	Flag of Ethiopia.svg Эфиопия	53,6
+79	Flag of Lebanon.svg Ливан	49,6
+80	Flag of Costa Rica (state).svg Коста-Рика	49,6
+81	Flag of Slovenia.svg Словения	49,5
+82	Flag of Panama.svg Панама	49,2
+83	Flag of Lithuania.svg Литва	48,4
+84	Flag of Tanzania.svg Танзания	48,0
+85	Flag of Turkmenistan.svg Туркмения	47,9
+86	Flag of Tunisia.svg Тунис	47,4
+87	Flag of Serbia.svg Сербия	43,9
+88	Flag of Libya.svg Ливия	41,3
+89	Flag of Ghana.svg Гана	37,2
+90	Flag of Yemen.svg Йемен	37,1
+91	Flag of the Democratic Republic of the Congo.svg ДРК	35,9
+92	Flag of Jordan.svg Иордания	35,8
+93	Flag of Côte d'Ivoire.svg Кот-д’Ивуар	34,3
+94	Flag of Syria.svg Сирия	34,2
+95	Flag of Bahrain.svg Бахрейн	33,8
+96	Flag of Bolivia (state).svg Боливия	33,0
+97	Flag of Cameroon.svg Камерун	32,1
+98	Flag of Latvia.svg Латвия	31,3
+99	Flag of Paraguay.svg Парагвай	31,0
+100	Flag of Trinidad and Tobago.svg Тринидад и Тобаго	28,1
+101	Flag of Uganda.svg Уганда	27,5
+102	Flag of Zambia.svg Замбия	27,0
+103	Flag of Estonia.svg Эстония	26,5
+104	Flag of El Salvador.svg Сальвадор	25,2
+105	Flag of Cyprus.svg Кипр	23,1
+106	Flag of Afghanistan.svg Афганистан	21,1
+107	Flag of Honduras.svg Гондурас	19,5
+108	border-none Непал	19,5
+109	Flag of Bosnia and Herzegovina.svg Босния и Герцеговина	18,5
+110	Flag of Gabon.svg Габон	17,4
+111	Flag of North Korea.svg КНДР	17,4
+112	Flag of Brunei.svg Бруней	17,1
+113	Flag of Mozambique.svg Мозамбик	17,1
+114	Flag of Iceland.svg Исландия	17,0
+115	Flag of Cambodia.svg Камбоджа	16,8
+116	Flag of Equatorial Guinea.svg Экваториальная Гвинея	16,7
+117	Flag of Papua New Guinea.svg Папуа — Новая Гвинея	16,6
+118	Flag of Georgia.svg Грузия	16,5
+119	Flag of Botswana.svg Ботсвана	15,8
+120	Flag of Senegal.svg Сенегал	15,7
+121	Flag of Zimbabwe.svg Зимбабве	14,7
+122	Flag of the Republic of the Congo.svg Республика Конго	14,1
+123	Flag of Jamaica.svg Ямайка	13,9
+124	Flag of Namibia.svg Намибия	13,4
+125	Flag of Albania.svg Албания	13,4
+126	Flag of Chad.svg Чад	12,8
+127	Flag of Palestine.svg Государство Палестина	12,8
+128	Flag of Burkina Faso.svg Буркина-Фасо	12,8
+129	Flag of Mauritius.svg Маврикий	12,6
+130	Flag of Mongolia.svg Монголия	12,1
+131	Flag of Mali.svg Мали	12,0
+132	Flag of Nicaragua.svg Никарагуа	11,8
+133	Flag of Laos.svg Лаос	11,7
+134	Flag of Macedonia.svg Македония	11,3
+135	Flag of South Sudan.svg Южный Судан	11,0
+136	Flag of Armenia.svg Армения	10,9
+137	Flag of Madagascar.svg Мадагаскар	10,7
+138	Flag of Malta.svg Мальта	10,5
+—	Flag of FLNKS.svg Новая Каледония (США)	10,2
+139	Flag of Benin.svg Бенин	9,52
+140	Flag of Tajikistan.svg Таджикистан	9,24
+141	Flag of Haiti.svg Гаити	8,60
+142	Flag of the Bahamas.svg Багамы	8,51
+143	Flag of Niger.svg Нигер	8,17
+144	Flag of Moldova.svg Молдавия	7,94
+145	Flag of Rwanda.svg Руанда	7,90
+146	Flag of Kyrgyzstan.svg Киргизия	7,40
+147	Flag of Kosovo.svg Косово	7,39
+148	Flag of Monaco.svg Монако	7,06
+149	Flag of Guinea.svg Гвинея	6,58
+150	Flag of Liechtenstein.svg Лихтенштейн	5,86
+151	Flag of Malawi.svg Малави	5,72
+—	Flag of French Polynesia.svg Французская Полинезия (Франция)	5,62
+—	Flag of Bermuda.svg Бермуды (Великобритания)	5,60
+152	Flag of Suriname.svg Суринам	5,21
+153	Flag of Mauritania.svg Мавритания	5,09
+154	Flag of East Timor.svg Восточный Тимор	4,97
+155	Flag of Sierra Leone.svg Сьерра-Леоне	4,89
+156	Flag of Montenegro.svg Черногория	4,59
+157	Flag of Togo.svg Того	4,58
+158	Flag of Fiji.svg Фиджи	4,53
+159	Flag of Swaziland.svg Свазиленд	4,48
+160	Flag of Barbados.svg Барбадос	4,35
+161	Flag of Eritrea.svg Эритрея	3,86
+—	Flag of the Cayman Islands.svg Острова Кайман (Великобритания)	3,48
+162	Flag of Andorra.svg Андорра	3,28
+—	Flag of Curaçao.svg Кюрасао (Нидерланды)	3,16
+163	Flag of Guyana.svg Гайана	3,09
+164	Flag of Maldives.svg Мальдивы	3,03
+165	Flag of Burundi.svg Бурунди	3,02
+—	Flag of Aruba.svg Аруба (Нидерланды)	2,66
+—	Flag of Greenland.svg Гренландия (Дания)	2,44
+166	Flag of Liberia.svg Либерия	2,12
+167	Flag of Lesotho.svg Лесото	2,08
+168	Flag of Bhutan.svg Бутан	1,97
+169	Flag of Cape Verde.svg Кабо-Верде	1,85
+170	Flag of San Marino.svg Сан-Марино	1,84
+171	Flag of the Central African Republic.svg ЦАР	1,84
+172	Flag of Belize.svg Белиз	1,70
+173	Flag of Djibouti.svg Джибути	1,59
+174	Flag of Seychelles.svg Сейшельские Острова	1,51
+175	Flag of Saint Lucia.svg Сент-Люсия	1,41
+176	Flag of Somalia.svg Сомали	1,37
+—	Flag of Zanzibar.svg Занзибар (Танзания)	1,29
+177	Flag of Antigua and Barbuda.svg Антигуа и Барбуда	1,25
+178	Flag of Guinea-Bissau.svg Гвинея-Бисау	1,21
+179	Flag of the Solomon Islands.svg Соломоновы Острова	1,10
+—	Flag of Sint Maarten.svg Синт-Мартен (Нидерланды)	1,06
+—	Flag of the British Virgin Islands.svg Виргинские Острова (Великобритания) (Брит.)	0,90
+180	Flag of Grenada.svg Гренада	0,88
+181	Flag of Saint Kitts and Nevis.svg Сент-Китс и Невис	0,85
+182	Flag of The Gambia.svg Гамбия	0,85
+183	Flag of Samoa.svg Самоа	0,82
+184	Flag of Vanuatu.svg Вануату	0,81
+—	Flag of the Turks and Caicos Islands.svg Тёркс и Кайкос (Великобритания)	0,80
+185	Flag of Saint Vincent and the Grenadines.svg Сент-Винсент и Гренадины	0,73
+186	Flag of the Comoros.svg Коморы	0,65
+187	Flag of Dominica.svg Доминика	0,53
+188	Flag of Tonga.svg Тонга	0,44
+189	Flag of Sao Tome and Principe.svg Сан-Томе и Принсипи	0,34
+—	Flag of the Cook Islands.svg Острова Кука (Новая Зеландия)	0,31
+—	Flag of Anguilla.svg Ангилья (Великобритания)	0,31
+190	Flag of the Federated States of Micronesia.svg Микронезия	0,31
+191	Flag of Palau.svg Палау	0,23
+192	Flag of the Marshall Islands.svg Маршалловы Острова	0,21
+193	Flag of Nauru.svg Науру	0,18
+194	Flag of Kiribati.svg Кирибати	0,18
+—	Flag of Montserrat.svg Монтсеррат (Великобритания)	0,06
+195	Flag of Tuvalu.svg Тувалу	0,04

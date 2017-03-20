@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="MainForm">
+  <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="795" height="637"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <tabbedpane id="311f1" binding="tabbedPane1" default-binding="true">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="5f981" layout-manager="GridLayoutManager" row-count="8" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Меню"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="3430d" class="javax.swing.JButton" binding="btnLab2">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Лабораторная работа 2"/>
+                </properties>
+              </component>
+              <component id="ed70f" class="javax.swing.JButton" binding="btnLab3">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Лабораторная работа 3"/>
+                </properties>
+              </component>
+              <component id="cac56" class="javax.swing.JButton" binding="btnLab4">
+                <constraints>
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Лабораторная работа 4"/>
+                </properties>
+              </component>
+              <component id="68008" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-6142685"/>
+                  <text value="АЛГОРИТМЫ ПОИСКА"/>
+                </properties>
+              </component>
+              <component id="d68ea" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-6142685"/>
+                  <text value="ИСЛЕДОВАНИЕ ЗАКОНОВ ЗИПФА ДЛЯ ОБРАБОТКИ ТЕКСТОВОЙ ИНФОРМАЦИИ"/>
+                </properties>
+              </component>
+              <component id="2075b" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-6142685"/>
+                  <text value="ИССЛЕДОВАНИЕ МЕТОДА АВТОМАТИЧЕСКОГО РЕФЕРИРОВАНИЯ ТЕКСТОВОЙ ИНФОРМАЦИИ"/>
+                </properties>
+              </component>
+              <component id="d1076" class="javax.swing.JButton" binding="btnLab1">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Лабораторная работа 1"/>
+                </properties>
+              </component>
+              <component id="94b6c" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-6142685"/>
+                  <text value="ОБРАБОТКА ТЕКСТОВОЙ ИНФОРМАЦИИ"/>
+                </properties>
+              </component>
+              <component id="e3ce6" class="javax.swing.JTextPane" binding="цельРаботыИзучитьОператорыTextPane" default-binding="true">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <minimum-size width="150" height="100"/>
+                    <preferred-size width="150" height="100"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <text value="Цель работы: изучить операторы, используемые при организации программ обработки строковых переменных, получить практические навыки в составлении программ.&#10;&#10;&#10;Задание 14: Дана строка. Напечатать в алфавитном порядке все слова из данной строки, имеющие заданную длину n."/>
+                </properties>
+              </component>
+              <component id="2a83a" class="javax.swing.JTextPane" binding="цельРаботыИзучитьМетодTextPane" default-binding="true">
+                <constraints>
+                  <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <minimum-size width="150" height="100"/>
+                    <preferred-size width="150" height="100"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <text value="Цель работы: изучить метод автоматического реферирования текстовой информации. Научиться строить реферат на основе предложенного текстового документа&#10;&#10;&#10;Задание: согласно законам Зипфа определяются характеристики исходного текста, строится строка ключевых слов и формируется реферат заданного размера"/>
+                </properties>
+              </component>
+              <scrollpane id="96ee7">
+                <constraints>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <minimum-size width="150" height="100"/>
+                    <preferred-size width="150" height="100"/>
+                  </grid>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="2eb5b" class="javax.swing.JTextPane" binding="цельРаботыОсвоитьИTextPane" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <editable value="false"/>
+                      <text value="Цель работы: Освоить и закрепить приемы работы с алгоритмами поиска числовых и строковых данных. Получить навыки применения алгоритмов поиска для практических задач.&#10;&#10;&#10;Задание 1 (6 баллов). &#10;1. Сгенерировать массив целых случайных чисел размером N = 1000. (Для генерации случайных чисел используйте класс System.Random).&#10;2. Отсортировать полученный массив любым методом сортировки.&#10;3. Ввести с клавиатуры некоторое целое число. &#10;4. Используя метод интерполяционного поиска, определить, позицию введенного числа в массиве, если оно в нем присутствует.&#10;&#10;Задание 2 (+1 балла). Составить программу, которая в заданном текстовом файле ищет все вхождения, введенного пользователем слова, формируя список позиций (от начала файла) искомого слова. Метод поиска – любой, кроме линейного поиска подстроки.&#10;&#10;Задание 3 (+2 балла). Составить программу, которая для заданного текстового файла создает файл-глоссарий. Файл-глоссарий содержит информацию обо всех словах, входящих в исходный текст и список ссылок на строки, в которых данное слово встречается. Файл-глоссарий должен иметь структуру, представленную в таблице 3.&#10;&#10;&#10;Для задания 2 в качестве алгоритма поиска использован алгоритм Рабина-Карпа"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+              <scrollpane id="4fc6a">
+                <constraints>
+                  <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <minimum-size width="150" height="100"/>
+                    <preferred-size width="150" height="100"/>
+                  </grid>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="9cfda" class="javax.swing.JTextPane" binding="цельРаботыОзнакомитьсяСTextPane" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <editable value="false"/>
+                      <text value="Цель работы: ознакомиться с законами Зипфа и научиться их применять для определения заданных характеристик текстовой информации. &#10;&#10;&#10;Исходные данные: тексты размером 1-2 страницы на русском, украинском, английском языках.&#10;&#10;Выходные данные: вычисленные характеристики Зипфа и наборы ключевых слов для исходных текстов."/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
+        </children>
+      </tabbedpane>
+    </children>
+  </grid>
+</form>

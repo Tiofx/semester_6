@@ -1,0 +1,13 @@
+PROC, 
+    A0100 = 012.34e-01
+    B0100abc0 = 1.1e+99, 1234.56e+00,1.23456e-99!!12.3456e+11
+    Cabcz0100zabc0 = A0100 && B0100abc0,
+END,
+
+proC
+    a010 = bsc010bbb = qwe0 = q0w1w0e0t0
+    abc0100abc0 = 123.4567e-11 << 123.456e+1 << 1.2e11 = .5e-11
+    topkLab2 = 4e11 >> 5e+11 !! 4.e-11,
+eNd
+
+pr,en< e+ proc.
