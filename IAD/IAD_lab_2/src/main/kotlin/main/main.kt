@@ -5,18 +5,26 @@ import java.io.File
 
 fun main(args: Array<String>) {
     val africa = "countries/africa.txt".getFromResources().parseCountryList()
+
     val areaFile = "area.txt".getFromResources()
-    val gdpFile = "gdp.txt".getFromResources()
     val populationFile = "population.txt".getFromResources()
+    val gdpFile = "gdp.txt".getFromResources()
 
-    val area = areaFile.parseArea()
-    val gdp = gdpFile.parseGdp()
-    val population = populationFile.parsePopulation()
+    val unionInformation = getUnionInformation(areaFile, populationFile, gdpFile)
 
-    val union = union(area, population, gdp)
-
-    println(union)
+    println(unionInformation.getInfoAbout(africa).size)
 }
+
+fun getUnionInformation(areaFile: File = "area.txt".getFromResources(),
+                        populationFile: File = "population.txt".getFromResources(),
+                        gdpFile: File = "gdp.txt".getFromResources()): Set<CountryInformation> =
+        union(areaFile.parseArea(), populationFile.parsePopulation(), gdpFile.parseGdp())
+
+
+fun Set<CountryInformation>.getInfoAbout(partOfWorld: Set<String>) = this.filter {
+    val countryName = it.name
+    partOfWorld.any { it.getShortCountryName() == countryName }
+}.toSet()
 
 fun union(area: List<Area>, population: List<Population>, gdp: List<Gdp>): Set<CountryInformation> {
     val countrySet = area.map {
