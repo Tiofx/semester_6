@@ -4,17 +4,18 @@ import util.*
 import java.io.File
 
 fun main(args: Array<String>) {
-    val set = "countries/africa.txt".getFromResources().parseCountryList()
+    val africa = "countries/africa.txt".getFromResources().parseCountryList()
     val areaFile = "area.txt".getFromResources()
-    val gdp = "gdp.txt".getFromResources()
-    val population = "population.txt".getFromResources()
+    val gdpFile = "gdp.txt".getFromResources()
+    val populationFile = "population.txt".getFromResources()
 
-    println(set)
-    println(areaFile.parseArea())
-    println(gdp.parseGdp())
-    println(population.parsePopulation())
+    val area = areaFile.parseArea()
+    val gdp = gdpFile.parseGdp()
+    val population = populationFile.parsePopulation()
+
 }
 
+fun String.getShortCountryName() = this.substringBefore('(').trim()
 
 fun File.parseCountryList() = this.readLines()
         .map { it.replace(Regex("\\d+."), "") }
