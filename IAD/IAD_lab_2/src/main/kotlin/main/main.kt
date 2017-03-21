@@ -4,6 +4,7 @@ import util.CountryInformation
 import util.getFromResources
 import util.getShortCountryName
 import util.parseCountrySet
+import java.io.File
 
 fun main(args: Array<String>) {
     val europe = "countries/europe.txt".getFromResources().parseCountrySet()
@@ -17,7 +18,34 @@ fun main(args: Array<String>) {
     val americaInfo = unionInformation.getInfoAbout(america)
     val asiaInfo = unionInformation.getInfoAbout(asia)
     val africaInfo = unionInformation.getInfoAbout(africa)
+
+    europeInfo.intoFiles(packageName = "europe")
+    americaInfo.intoFiles(packageName = "america")
+    asiaInfo.intoFiles(packageName = "asia")
+    africaInfo.intoFiles(packageName = "africa")
 }
+
+fun Set<CountryInformation>.intoFiles(basePath: String = "${System.getProperty("user.dir")}/out/outResources",
+                                      packageName: String) {
+    (0..3).forEach {
+        File("$basePath/$packageName/${getColumnName(it)}").printWriter().use {
+            out ->
+            out.println(this.getColumn(it)
+                    .map(Any::toString)
+                    .reduce { acc, s -> "$acc\n$s" }
+                    .replace('.', ','))
+        }
+    }
+}
+
+fun getColumnName(number: Int) = when (number) {
+    0 -> "name"
+    1 -> "area"
+    2 -> "population"
+    3 -> "gdp"
+    else -> "else"
+}
+
 
 fun Set<CountryInformation>.getColumn(number: Int) = this.map {
     when (number) {
