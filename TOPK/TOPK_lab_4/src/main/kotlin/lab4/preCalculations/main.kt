@@ -7,5 +7,14 @@ fun main(args: Array<String>) {
 //    val file = "test_primer.txt".getFileFromResources()
 //    val file = "test_srs.txt".getFileFromResources()
 
-    println(calculateMatrix(file))
+    val calculations = calculateMatrix(file)
+    val simplePrecedenceFunctionCalculation = SimplePrecedenceFunctionCalculation(calculations)
+
+    println("""
+    |$calculations
+    |=============================================================================
+    |==================== Расчет функции простого предшествования ================
+    |=============================================================================
+    |$simplePrecedenceFunctionCalculation
+    """.trimMargin())
 }
