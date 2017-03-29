@@ -19,6 +19,7 @@ fun main(args: Array<String>) {
     val asiaInfo = unionInformation.getInfoAbout(asia)
     val africaInfo = unionInformation.getInfoAbout(africa)
 
+
     europeInfo.intoFiles(packageName = "europe")
     americaInfo.intoFiles(packageName = "america")
     asiaInfo.intoFiles(packageName = "asia")
@@ -28,7 +29,7 @@ fun main(args: Array<String>) {
 fun Set<CountryInformation>.intoFiles(basePath: String = "${System.getProperty("user.dir")}/out/outResources",
                                       packageName: String) {
     (0..3).forEach {
-        File("$basePath/$packageName/${getColumnName(it)}").printWriter().use {
+        File("$basePath/$packageName/${getColumnName(it)}.txt").printWriter().use {
             out ->
             out.println(this.getColumn(it)
                     .map(Any::toString)
@@ -55,7 +56,7 @@ fun Set<CountryInformation>.getColumn(number: Int) = this.map {
         3 -> it.gdp
         else -> throw java.security.InvalidParameterException()
     }
-}.toSet()
+}.toList()
 
 
 fun Set<CountryInformation>.getInfoAbout(partOfWorld: Set<String>) = this.filter {
