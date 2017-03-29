@@ -1,5 +1,4 @@
 fun IntArray.quickSort(from: Int = 0, to: Int = this.size - 1) {
-
     if (from < to) {
         val q = partition(this, from, to)
         this.quickSort(from, q - 1)
@@ -8,7 +7,6 @@ fun IntArray.quickSort(from: Int = 0, to: Int = this.size - 1) {
 }
 
 private fun partition(array: IntArray, left: Int, right: Int): Int {
-
     val pivot = array[right]
     var i = left - 1
 

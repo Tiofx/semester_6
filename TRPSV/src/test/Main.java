@@ -11,7 +11,7 @@ public class Main {
         int size = MPI.COMM_WORLD.Size();
         Comm comm = MPI.COMM_WORLD;
 
-        System.out.println("size: " + size + " rank: " + comm.Rank());
+        System.out.println("arraySize: " + size + " rank: " + comm.Rank());
 
         MPI.Finalize();
     }
