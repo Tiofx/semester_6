@@ -1,37 +1,39 @@
-import mpi.MPI
+import task2.task2
 import java.io.File
 import java.util.*
-import kotlin.system.measureTimeMillis
+import kotlin.system.measureNanoTime
 
 //
-val elementNumber = 32 * 1e3.toInt()
-val iterationNumber = 100
+val elementNumber = 8 * 1e3.toInt()
+val iterationNumber = 15
 
 
 //val elementNumber = 32
 //val iterationNumber = 1
 //
 fun main(args: Array<String>) {
+//    val parallelTime = work(args)
 
-    val parallelTime = work(args)
+//    parallelBellmanFord(args, iterationNumber, iterationNumber)
+//    test()
+    task2(args)
+
+//    if (MPI.COMM_WORLD.Rank() == 0) {
+//        println(parallelTime
+//                .map { it / 1e6 }
+//                .map(Any::toString)
+//                .reduce { acc, s -> "$acc\n$s" })
 //
-//    MPI.Init(args)
-//    val comm = MPI.COMM_WORLD
-//
-    if (MPI.COMM_WORLD.Rank() == 0) {
-        println(parallelTime.map(Long::toString).reduce { acc, s -> "$acc\n$s" })
+//        println("""
+//            |-------------------------------------------------------------
+//            | количество элементов: $elementNumber
+//            | количество итераций: $iterationNumber
+//            | затраченное время на последовательную реализацию: ${sort(elementNumber, iterationNumber) / 1e6} мс
+//            | затраченное время на параллельную реализацию:     ${parallelTime.drop((iterationNumber * 0.1).toInt()).average() / 1e6} мс
+//            |-------------------------------------------------------------
+//    """.trimMargin())
 
-        println("""
-            |-------------------------------------------------------------
-            | количество элементов: $elementNumber
-            | количество итераций: $iterationNumber
-            | затраченное время на последовательную реализацию: ${sort(elementNumber, iterationNumber)} мс
-            | затраченное время на параллельную реализацию:     ${parallelTime.average()} мс
-            |-------------------------------------------------------------
-    """.trimMargin())
-
-    }
-//    MPI.Finalize()
+//    }
 }
 
 private fun sort(size: Int, iterationNumber: Int): Double {
@@ -47,7 +49,7 @@ private fun sort(size: Int, iterationNumber: Int): Double {
     println("=========================")
 
     for (i in 0..iterationNumber - 1) {
-        val measureTimeMillis = measureTimeMillis { array.quickSort() }
+        val measureTimeMillis = measureNanoTime { array.quickSort() }
         totalSortTime += measureTimeMillis
 //        println(measureTimeMillis)
 //        shuffle(array)
@@ -74,14 +76,15 @@ fun generateArray(size: Int, maxValue: Int): IntArray {
         for (i in numbers.indices) {
             numbers[i] = generator.nextInt(maxValue)
         }
-
-        File(filename).writeText(
-                "$size\n" +
-                        numbers.map(Any::toString)
-                                .reduceRight { s, acc -> "$acc $s" }
-        )
-
         return numbers
+
+//        File(filename).writeText(
+//                "$size\n" +
+//                        numbers.map(Any::toString)
+//                                .reduceRight { s, acc -> "$acc $s" }
+//        )
+
+//        return numbers
     } else {
         (0..size - 1).forEach { numbers[it] = list[it + 1] }
 

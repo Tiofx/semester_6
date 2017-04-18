@@ -1,5 +1,5 @@
 import mpi.MPI
-import kotlin.system.measureTimeMillis
+import kotlin.system.measureNanoTime
 
 open class RootProcess(val hyperCubeSize: Int, var array: IntArray) {
     val p = (2 pow hyperCubeSize).toInt()
@@ -16,12 +16,17 @@ open class RootProcess(val hyperCubeSize: Int, var array: IntArray) {
 
 //        MPI.COMM_WORLD.Barrier()
 
-        timeConsuming = measureTimeMillis {
+        timeConsuming = measureNanoTime {
             sendOutArray()
             collectArray()
         }
 //        println(timeConsuming)
 //        println("root\n ${array.str()}")
+    }
+
+    fun resetArray() {
+        shuffle(array)
+        timeConsuming = -1L
     }
 
     //TODO: optimize

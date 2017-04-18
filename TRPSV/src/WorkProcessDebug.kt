@@ -30,6 +30,7 @@ open class WorkProcessDebug(val coords: IntArray, val N: Int, val hyperCube: Car
             println(array.str())
 
             MPI.COMM_WORLD.Gather(array, 0, array.size, MPI.INT, rootProcess?.array, 0, array.size, MPI.INT, ROOT)
+//            MPI.COMM_WORLD.Gatherv(array, 0, array.size, MPI.INT, rootProcess?.array, 0, , MPI.INT, ROOT)
         }
 
 

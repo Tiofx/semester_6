@@ -1,5 +1,7 @@
 import HyperCubeCreator.createCartComm
 import mpi.MPI
+import kotlin.properties.Delegates
+import kotlin.system.measureNanoTime
 
 val ROOT: Int = 0
 
@@ -30,51 +32,64 @@ fun work(args: Array<String>): MutableList<Long> {
     val N = size.log2().floor()
     val p = (2 pow N).toInt()
 
+
+    var rootProcess by Delegates.notNull<RootProcess>()
     if (rank == 0) {
         println("N = $N  p = $p")
+
+        rootProcess = rootProcess(elementNumber, elementNumber)
     }
 
-//    println(rank)
+    val start = MPI.Wtick()
 
     for (i in 0..iterationNumber - 1) {
 
-        if (rank == 0) Thread({ rootProcess(elementNumber, elementNumber) }).start()
+        MPI.COMM_WORLD.Barrier()
 
-        when (rank) {
-//        0 -> rootProcess()
-            in 0..p -> workProcess()
-//        in 1..p -> workProcess()
-            else -> println("The process with rank=$rank is too lazy to work!")
-        }
+//        if (rank == 0) Thread({ rootProcess(elementNumber, elementNumber) }).start()
 
-        if (rank == 0) {
-            totalTime.add(time)
-//            totalTime += time
-//            println("time = $time    totalTime = $totalTime")
-        } else {
-//            MPI.COMM_WORLD.Barrier()
-        }
+        totalTime.add(
+                measureNanoTime {
+                    if (rank == 0) {
+                        rootProcess.sendOutArray()
+                    }
 
+                    when (rank) {
+                        in 0..p -> workProcess()
+                        else -> println("The process with rank=$rank is too lazy to work!")
+                    }
+
+                    if (rank == 0) {
+                        rootProcess.collectArray()
+                    }
+                }
+        )
+
+        if (rank == 0) rootProcess.resetArray()
+        MPI.COMM_WORLD.Barrier()
     }
 
+    val end = MPI.Wtick()
+
+    println("$rank:  ${(end - start)} ${(end - start).toDouble() / iterationNumber}")
 
     MPI.Finalize()
 
     return if (rank == 0) totalTime else mutableListOf(-1)
-//    println("totalTime=$totalTime iterationNumber = $iterationNumber")
 }
 
 
-fun rootProcess(arraySize: Int, maxValue: Int) {
+fun rootProcess(arraySize: Int, maxValue: Int): RootProcess {
     val array = generateArray(arraySize, maxValue)
     val size = MPI.COMM_WORLD.Size()
     val N = size.log2().floor()
 
-
     val rootProcess = RootProcess(N, array)
-    rootProcess.beginProcess()
 
-    time = rootProcess.timeConsuming
+    return rootProcess
+
+//    rootProcess.beginProcess()
+//    time = rootProcess.timeConsuming
 //    rootProcess.timeConsuming = 0
 
 //    MPI.COMM_WORLD.Barrier()
@@ -93,6 +108,9 @@ fun workProcess() {
 //
 //    val workProcess = WorkProcessDebug(coords, N, hyperCube)
     val workProcess = WorkProcess(coords, N, hyperCube)
+
+//    if (rank != 0) MPI.COMM_WORLD.Barrier()
+
     workProcess.begin()
 }
 
