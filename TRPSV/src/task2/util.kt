@@ -44,3 +44,32 @@ inline fun AdjacencyList1D.toAdjacencyList(): AdjacencyList = this
 data class InputGraph(val sourceVertex: Int,
                       val adjacencyMatrix: AdjacencyMatrix,
                       val vertexNumber: Int = adjacencyMatrix.size)
+
+
+
+typealias PlainAdjacencyList = IntArray
+operator fun PlainAdjacencyList.get(index: Int, col: Int) = this[3 * index + col]
+operator fun PlainAdjacencyList.get(index: Int, content: PlainAdjacency) = this[index, content.number]
+
+enum class PlainAdjacency(val number: Int) {
+    SOURCE(0), DESTINATION(1), WEIGHT(2)
+}
+
+val PlainAdjacencyList.edgeNumber: Int
+    get() = (this.size + 1) / 3
+
+
+fun AdjacencyMatrix.toPlainAdjacencyList(): PlainAdjacencyList =
+        this.mapIndexed { rowNum, row ->
+            row.mapIndexed { colNum, weight -> intArrayOf(rowNum, colNum, weight) }
+                    .reduce { acc, ints -> acc + ints }
+        }
+                .reduce { acc, list -> acc + list }
+
+
+fun AdjacencyMatrix.toAdjacencyList() = this.mapIndexed { row, ints ->
+    ints.mapIndexed { col, w -> if (w != task2.INFINITE) Triple(row, col, w) else null }
+            .filterNotNull()
+}
+        .reduce { acc, list -> acc + list }
+        .toTypedArray()
