@@ -1,11 +1,12 @@
 package task2
 
-fun bellmanFord(graph: InputGraph) = with(graph) {
-    bellmanFord(
-            adjacencyMatrix.toAdjacencyList(),
-            sourceVertex,
-            vertexNumber)
-}
+
+//inline fun bellmanFord(graph: InputGraph) = with(graph) {
+//    bellmanFord(
+//            adjacencyMatrix.toAdjacencyList(),
+//            sourceVertex,
+//            vertexNumber)
+//}
 
 
 fun bellmanFord(adjacencyList: AdjacencyList,
@@ -13,8 +14,8 @@ fun bellmanFord(adjacencyList: AdjacencyList,
                 vertexNumber: Int,
                 edgeNumber: Int = adjacencyList.size): IntArray {
 
-    val distance = IntArray(vertexNumber, { INFINITE })
-    distance[sourceVertex] = 0
+    val distance = IntArray(vertexNumber, { INFINITE }).apply { this[sourceVertex] = 0 }
+//    distance[sourceVertex] = 0
 
     for (i in 0..vertexNumber - 1) {
         if (!adjacencyList.relaxAll(distance))
@@ -24,8 +25,9 @@ fun bellmanFord(adjacencyList: AdjacencyList,
     return distance
 }
 
-fun AdjacencyList.relaxAll(distance: IntArray, from: Int = 0, to: Int = lastIndex) =
-        (from..to).map { get(it).relax(distance) }.reduce { acc, b -> acc || b }
+inline fun AdjacencyList.relaxAll(distance: IntArray, from: Int = 0, to: Int = lastIndex) =
+        (from..to).map { get(it).relax(distance) }.onEach { if (it) return@relaxAll true }.let { false }
+//        (from..to).map { get(it).relax(distance) }.reduce { acc, b -> acc || b }
 
 
 fun Adjacency.relax(distance: IntArray): Boolean {

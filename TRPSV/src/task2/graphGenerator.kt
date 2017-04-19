@@ -3,17 +3,13 @@ package task2
 private inline operator fun AdjacencyMatrix.set(range: IntRange, value: Int) =
         range.forEach { this[it][it] = value }
 
+fun plainAdjacencyList(vertexNumber: Int, edgeProbability: Double, maxWeight: Int): PlainAdjacencyList =
+        adjacencyMatrix(vertexNumber, edgeProbability, maxWeight)
+                .toPlainAdjacencyList()
 
 fun adjacencyList(vertexNumber: Int, edgeProbability: Double, maxWeight: Int): AdjacencyList =
         adjacencyMatrix(vertexNumber, edgeProbability, maxWeight)
                 .toAdjacencyList()
-
-fun AdjacencyMatrix.toAdjacencyList() = this.mapIndexed { row, ints ->
-    ints.mapIndexed { col, w -> if (w != task2.INFINITE) Triple(row, col, w) else null }
-            .filterNotNull()
-}
-        .reduce { acc, list -> acc + list }
-        .toTypedArray()
 
 fun adjacencyMatrix(vertexNumber: Int,
                     edgeProbability: Double = 0.5,
@@ -60,12 +56,3 @@ fun test() {
             |${matrix.toAdjacencyList().toIntArray().toAdjacencyList().toReadableString()}
     """.trimMargin())
 }
-
-
-//typealias PlainAdjacencyList = IntArray
-//operator fun PlainAdjacencyList.get(index: Int, col: Int) = this[3 * index + col]
-//operator fun PlainAdjacencyList.get(index: Int, col: PlainAdjacency) = this[index, col.ordinal]
-//
-//enum class PlainAdjacency(val index: Int) {
-//    SOURCE(0), DESTINATION(1), WEIGHT(2)
-//}
