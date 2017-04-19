@@ -7,11 +7,12 @@ import task2.parallel.WorkMaster
 import kotlin.system.measureNanoTime
 
 fun task2(args: Array<String>) {
-    val vertexNumber = 333
-    val edgeProbability = 0.9
+    val vertexNumber = 222
+    val sourceVertex = random(vertexNumber) - 1
+    val edgeProbability = 0.1
     val maxWeight = 99999
 
-    val inputGraph = InputGraph(random(vertexNumber - 1), adjacencyMatrix(vertexNumber, edgeProbability, maxWeight))
+    val inputGraph = InputGraph(sourceVertex, adjacencyMatrix(vertexNumber, edgeProbability, maxWeight))
 
     val parallelResult = parallelBellmanFord(args, inputGraph, iterationNumber)
 
@@ -54,19 +55,22 @@ fun parallelBellmanFord(args: Array<String>, inputGraph: InputGraph, iterationNu
     MPI.Init(args)
     val comm = MPI.COMM_WORLD
     val rank = comm.Rank()
+//
+//    val workMaster = WorkMaster(inputGraph)
+//    val work = Work()
 
-    val workMaster = WorkMaster(inputGraph)
+    val process = if (rank == 0) WorkMaster(inputGraph) else Work()
+
     val result = mutableListOf<Long>()
 
     repeat(iterationNumber) {
         comm.Barrier()
 
         val nanoTime = measureNanoTime {
-            when (rank) {
-                0 -> workMaster.work()
-                else -> Work().work()
-            }
+            process.work()
         }
+
+        process.reset()
 
         if (rank == 0) result.add(nanoTime)
 
