@@ -13,7 +13,7 @@ fun mpiBcastOneValue(value: Int, datatype: Datatype?, root: Int): Int {
 
 data class EdgeSegment(val startEdge: Int, val endEdge: Int)
 
-fun Work.EdgeSegment(edgeNumber: Int = adjacencyList.edgeNumber): EdgeSegment {
+fun Work.EdgeSegment(edgeNumber: Int = plainAdjacencyList.edgeNumber): EdgeSegment {
     val edgePerProc = edgeNumber / procNum
     val startEdge = edgePerProc * rank
     val endEdge = if (rank != procNum - 1) startEdge + edgePerProc - 1 else edgeNumber - 1
