@@ -1,6 +1,5 @@
 package task2.graph
 
-import task2.graph.*
 import task2.graph.Util.AdjacencyMatrixUtil.toAdjacencyList
 import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
 

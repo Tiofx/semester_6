@@ -1,7 +1,7 @@
 package task2.graph.bellmanFord
 
-import task2.graph.INFINITE
 import task2.graph.InputGraph
+import task2.graph.INFINITE
 import task2.graph.PlainAdjacency
 import task2.graph.PlainAdjacencyList
 import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
@@ -17,15 +17,11 @@ inline fun bellmanFord(graph: InputGraph) = with(graph) {
 
 
 fun bellmanFord(plainAdjacencyList: PlainAdjacencyList,
-                sourceVertex: Int,
-                vertexNumber: Int): IntArray {
-
-    val distance = IntArray(vertexNumber, { INFINITE }).apply { this[sourceVertex] = 0 }
-
-    while (plainAdjacencyList.relaxAll(distance)) {
-    }
-    return distance
-}
+                       sourceVertex: Int,
+                       vertexNumber: Int): IntArray =
+        IntArray(vertexNumber, { INFINITE })
+                .apply { this[sourceVertex] = 0 }
+                .apply { while (plainAdjacencyList.relaxAll(this)); }
 
 inline fun PlainAdjacencyList.relaxAll(distance: IntArray, from: Int = 0, to: Int = edgeNumber - 1) =
         (from..to).map { relax(it, distance) }

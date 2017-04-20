@@ -14,9 +14,10 @@ fun task2(args: Array<String>) {
     val sourceVertex = random(vertexNumber - 1)
     val edgeProbability = 0.9
     val maxWeight = 99
+
     val iterationNumber = 10
 
-    val inputGraph = InputGraph(sourceVertex, adjacencyMatrix(vertexNumber, edgeProbability, maxWeight))
+    val inputGraph = InputGraph(adjacencyMatrix(vertexNumber, edgeProbability, maxWeight), sourceVertex)
     val parallelResult = parallelBellmanFord(args, inputGraph, iterationNumber)
 
     if (MPI.COMM_WORLD.Rank() == 0) {
