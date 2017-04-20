@@ -61,7 +61,8 @@ val PlainAdjacencyList.edgeNumber: Int
 
 fun AdjacencyMatrix.toPlainAdjacencyList(): PlainAdjacencyList =
         this.mapIndexed { rowNum, row ->
-            row.mapIndexed { colNum, weight -> intArrayOf(rowNum, colNum, weight) }
+            row.mapIndexed { colNum, weight -> if (weight != task2.INFINITE) intArrayOf(rowNum, colNum, weight) else null }
+                    .filterNotNull()
                     .reduce { acc, ints -> acc + ints }
         }
                 .reduce { acc, list -> acc + list }

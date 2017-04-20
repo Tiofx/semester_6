@@ -5,7 +5,7 @@ import kotlin.system.measureNanoTime
 
 //
 val elementNumber = 8 * 1e3.toInt()
-val iterationNumber = 15
+val iterationNumber = 88
 
 
 //val elementNumber = 32
