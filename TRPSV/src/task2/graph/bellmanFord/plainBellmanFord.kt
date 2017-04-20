@@ -1,4 +1,12 @@
-package task2
+package task2.graph.bellmanFord
+
+import task2.graph.INFINITE
+import task2.graph.InputGraph
+import task2.graph.PlainAdjacency
+import task2.graph.PlainAdjacencyList
+import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
+import task2.graph.Util.PlainAdjacencyListUtil.edgeNumber
+import task2.graph.Util.PlainAdjacencyListUtil.get
 
 inline fun bellmanFord(graph: InputGraph) = with(graph) {
     bellmanFord(

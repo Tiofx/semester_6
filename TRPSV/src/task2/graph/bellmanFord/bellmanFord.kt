@@ -1,4 +1,12 @@
-package task2
+package task2.graph.bellmanFord
+
+import task2.graph.Adjacency
+import task2.graph.AdjacencyList
+import task2.graph.INFINITE
+import task2.graph.Util.AdjacencyUtil.destination
+import task2.graph.Util.AdjacencyUtil.source
+import task2.graph.Util.AdjacencyUtil.weight
+
 
 fun bellmanFord(adjacencyList: AdjacencyList,
                 sourceVertex: Int,

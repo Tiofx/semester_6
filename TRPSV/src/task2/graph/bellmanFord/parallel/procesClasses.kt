@@ -1,7 +1,13 @@
-package task2.parallel
+package task2.graph.bellmanFord.parallel
 
 import mpi.MPI
-import task2.*
+import task2.graph.AdjacencyMatrix
+import task2.graph.INFINITE
+import task2.graph.InputGraph
+import task2.graph.PlainAdjacencyList
+import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
+import task2.graph.Util.PlainAdjacencyListUtil.edgeNumber
+import task2.graph.bellmanFord.relaxAll
 import kotlin.properties.Delegates
 
 class WorkMaster(override var vertexNumber: Int,
@@ -91,4 +97,3 @@ abstract class AbstractProcess {
 
     abstract protected fun preparation()
 }
-

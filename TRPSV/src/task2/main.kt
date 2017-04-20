@@ -1,8 +1,12 @@
 package task2
 
 import mpi.MPI
-import task2.parallel.Work
-import task2.parallel.WorkMaster
+import task2.graph.InputGraph
+import task2.graph.adjacencyMatrix
+import task2.graph.bellmanFord.bellmanFord
+import task2.graph.random
+import task2.graph.bellmanFord.parallel.Work
+import task2.graph.bellmanFord.parallel.WorkMaster
 import kotlin.system.measureNanoTime
 
 fun task2(args: Array<String>) {

@@ -1,4 +1,8 @@
-package task2
+package task2.graph
+
+import task2.graph.*
+import task2.graph.Util.AdjacencyMatrixUtil.toAdjacencyList
+import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
 
 private inline operator fun AdjacencyMatrix.set(range: IntRange, value: Int) =
         range.forEach { this[it][it] = value }
@@ -25,7 +29,7 @@ fun random(maxValue: Int) = (1 + Math.random() * maxValue).toInt()
 
 
 fun AdjacencyMatrix.toReadableString() = this
-        .map { it.map { if (it == task2.INFINITE) "x" else it.toString() }.reduce { acc, s -> "$acc $s" }.trim() }
+        .map { it.map { if (it == task2.graph.INFINITE) "x" else it.toString() }.reduce { acc, s -> "$acc $s" }.trim() }
         .reduce { acc, ints -> "$acc\n$ints" }
         .trim()
 
@@ -33,26 +37,3 @@ fun AdjacencyList.toReadableString() = this
         .map { it.toString() }
         .reduce { acc, s -> "$acc\n$s" }
         .trim()
-
-
-fun test() {
-    val source = 0
-    val vertexNumber = 10
-
-    val matrix = adjacencyMatrix(vertexNumber, 0.3, 9)
-    println("""
-            |${matrix.toReadableString()}
-            |_
-            |{matrix.toIntArray().contentToString()}
-            |_
-            |{matrix.toIntArray().toAdjacencyMatrix(vertexNumber).toReadableString()}
-            |_
-            |{bellmanFord(matrix.toAdjacencyList(), source, vertexNumber).contentToString()}
-            |_
-            |${matrix.toAdjacencyList().toReadableString()}
-            |_
-            |${matrix.toAdjacencyList().toIntArray().contentToString()}
-            |_
-            |${matrix.toAdjacencyList().toIntArray().toAdjacencyList().toReadableString()}
-    """.trimMargin())
-}
