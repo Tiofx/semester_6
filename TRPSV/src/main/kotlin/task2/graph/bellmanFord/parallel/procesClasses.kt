@@ -38,7 +38,6 @@ open class Work : AbstractProcess() {
 
         for (i in 0..vertexNumber - 1) {
             hasRelax = plainAdjacencyList.relaxAll(distance, edgeSegment.startEdge, edgeSegment.endEdge)
-
             MPI.COMM_WORLD.Allreduce(distance, 0, temp, 0, vertexNumber, MPI.INT, MPI.MIN)
 
             if (!hasRelax and (distance contentEquals temp)) break
@@ -89,11 +88,6 @@ abstract class AbstractProcess {
     protected var temp by Delegates.notNull<IntArray>()
 
     fun work() {
-//        println("""
-//        |${measureNanoTime { preparation() } / 1e6} мс
-//        |${measureNanoTime { mainWork() } / 1e6} мс
-//        |____
-//        """.trimMargin())
         preparation()
         mainWork()
     }

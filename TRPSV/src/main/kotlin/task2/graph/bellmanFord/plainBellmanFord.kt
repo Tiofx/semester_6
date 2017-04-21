@@ -23,6 +23,7 @@ fun bellmanFord(plainAdjacencyList: PlainAdjacencyList,
                 .apply { this[sourceVertex] = 0 }
                 .apply { while (plainAdjacencyList.relaxAll(this)); }
 
+//TODO:Need optimization
 fun PlainAdjacencyList.relaxAll(distance: IntArray, from: Int = 0, to: Int = edgeNumber - 1) =
         (from..to)
                 .map { relax(it, distance) }

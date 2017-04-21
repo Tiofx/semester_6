@@ -21,23 +21,19 @@ enum class PlainAdjacency(val number: Int) {
 
 object Util {
     object AdjacencyUtil {
-
         val Adjacency.source: Int
             get() = this.first
 
         val Adjacency.destination: Int
             get() = this.second
+
         val Adjacency.weight: Int
             get() = this.third
-
     }
 
     object AdjacencyMatrixUtil {
-
         inline fun AdjacencyMatrix.vertexNumber() = this.size
-
         inline fun AdjacencyMatrix.toIntArray(): AdjacencyMatrix1D = this.reduce { acc, ints -> acc + ints }
-
 
         fun AdjacencyMatrix.toPlainAdjacencyList(): PlainAdjacencyList =
                 this.mapIndexed { rowNum, row ->
@@ -53,18 +49,14 @@ object Util {
         }
                 .reduce { acc, list -> acc + list }
                 .toTypedArray()
-
     }
 
     object AdjacencyMatrix1DUtil {
         inline fun AdjacencyMatrix1D.toAdjacencyMatrix(rowColNum: Int = Math.sqrt(this.size.toDouble()).toInt()): AdjacencyMatrix
                 = Array(rowColNum, { this.copyOfRange(it * rowColNum, (it + 1) * rowColNum) })
-
     }
 
     object AdjacencyListUtil {
-
-
         val AdjacencyList.edgeNumber: Int
             get() = this.size
 
@@ -87,5 +79,4 @@ object Util {
                 .map { (_, value) -> Triple(value[0], value[1], value[2]) }
                 .toTypedArray()
     }
-
 }

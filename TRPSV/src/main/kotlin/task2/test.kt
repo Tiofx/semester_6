@@ -2,7 +2,12 @@ package task2
 
 import mpi.MPI
 import task2.graph.PlainAdjacencyList
+import task2.graph.bellmanFord.bellmanFord
+import task2.graph.bellmanFord.parallel.Work
+import task2.graph.bellmanFord.parallel.WorkMaster
 import task2.graph.plainAdjacencyList
+import task2.graph.random
+import kotlin.system.measureNanoTime
 
 typealias ParallelAndSequentialTime = Pair<Double, Double>
 
@@ -70,6 +75,54 @@ fun measureTask2(args: Array<String>, iterationNumber: Int, generateValues: Gene
     return -1.0 to -1.0
 }
 
-
 fun GenerateValues.generateGraph(): PlainAdjacencyList =
         plainAdjacencyList(vertexNumber, edgeProbability)
+
+
+fun sequentialBellmanFord(generateValues: GenerateValues, iterationNumber: Int): MutableList<Long> {
+    val result = mutableListOf<Long>()
+
+    repeat(iterationNumber) {
+        val plainAdjacencyList = generateValues.generateGraph()
+        val sourceVertex = random(generateValues.vertexNumber - 1)
+        val vertexNumber = generateValues.vertexNumber
+
+        val nanoTime = measureNanoTime {
+            bellmanFord(plainAdjacencyList, sourceVertex, vertexNumber)
+        }
+
+        result.add(nanoTime)
+    }
+
+    return result
+}
+
+fun parallelBellmanFord(args: Array<String>, generateValues: GenerateValues, iterationNumber: Int):
+        MutableList<Long> {
+    MPI.Init(args)
+
+    val comm = MPI.COMM_WORLD
+    val rank = comm.Rank()
+
+    val process = if (rank == 0) WorkMaster(generateValues) else Work()
+    val result = mutableListOf<Long>()
+
+    repeat(iterationNumber) {
+        comm.Barrier()
+
+        val nanoTime = measureNanoTime {
+            process.work()
+        }
+
+        if (rank == 0) {
+            result.add(nanoTime)
+            process.plainAdjacencyList = generateValues.generateGraph()
+        }
+
+        process.reset()
+        comm.Barrier()
+    }
+
+    MPI.Finalize()
+    return result
+}
