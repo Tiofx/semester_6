@@ -1,4 +1,4 @@
-import javax.swing.JOptionPane
+import javax.swing.*
 
 group 'TRSPV'
 version '1.0-SNAPSHOT'
@@ -33,7 +33,6 @@ def mpjStarter = files("$mpjHome/lib/starter.jar")
 def mpjJar = files("$mpjHome/lib/mpj.jar")
 def mpjClasspath = sourceSets.main.runtimeClasspath - mpjJar
 
-
 defaultTasks 'run'
 
 repositories {
@@ -50,11 +49,11 @@ dependencies {
 //    compile group: "golem", name: "golem-core", version: "0.9"
 }
 
-
-
 run {
+    def procNum = JOptionPane.showInputDialog(null, "Введите количество процессов: ", "2")
+
     main = 'runtime.starter.MPJRun'
     classpath = mpjStarter
-    args mainClassName, '-cp', mpjClasspath.asPath, '-np', '2'
+    args mainClassName, '-cp', mpjClasspath.asPath, '-np', procNum
     dependsOn classes
 }
