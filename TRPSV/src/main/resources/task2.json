@@ -1,0 +1,24 @@
+{
+  "iterationCoefficient": 0.05,
+  "graphs": {
+    "vertexNumber": [
+      10,
+      25,
+      50,
+      100,
+      150,
+      200,
+      300,
+      500,
+      750,
+      1000
+    ],
+    "edgeProbability": [
+      0.1,
+      0.25,
+      0.5,
+      0.75,
+      0.9
+    ]
+  }
+}

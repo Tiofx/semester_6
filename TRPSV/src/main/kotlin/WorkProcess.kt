@@ -1,3 +1,5 @@
+package main.kotlin
+
 import mpi.Cartcomm
 import mpi.MPI
 import kotlin.properties.Delegates
@@ -105,8 +107,6 @@ open class WorkProcess(val coords: IntArray, val N: Int, val hyperCube: Cartcomm
                 MPI.INT, destinationRank, Operation.EXCHANGE_WITH_PROCESS.ordinal)
 
 
-
-
 //        val recvStatus = MPI.COMM_WORLD.Recv(tempArray, 0, N * numberElement,
 //                MPI.INT, destinationRank, Operation.EXCHANGE_WITH_PROCESS.ordinal)
 //        val receiveElementNumber = recvStatus.Get_count(MPI.INT)
@@ -116,7 +116,6 @@ open class WorkProcess(val coords: IntArray, val N: Int, val hyperCube: Cartcomm
 //        }
 
 //        array = tempArray.copyOfRange(0, receiveElementNumber + array.size)
-
 
 
         val probeStatus = MPI.COMM_WORLD.Probe(destinationRank, Operation.EXCHANGE_WITH_PROCESS.ordinal)

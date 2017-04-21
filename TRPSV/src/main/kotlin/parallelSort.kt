@@ -1,4 +1,6 @@
-import HyperCubeCreator.createCartComm
+package main.kotlin
+
+import main.kotlin.HyperCubeCreator.createCartComm
 import mpi.MPI
 import kotlin.properties.Delegates
 import kotlin.system.measureNanoTime
@@ -46,7 +48,7 @@ fun work(args: Array<String>): MutableList<Long> {
 
         MPI.COMM_WORLD.Barrier()
 
-//        if (rank == 0) Thread({ rootProcess(elementNumber, elementNumber) }).start()
+//        if (rank == 0) Thread({ rootProcess(kotlin.getElementNumber, kotlin.getElementNumber) }).start()
 
         totalTime.add(
                 measureNanoTime {
@@ -89,7 +91,7 @@ fun rootProcess(arraySize: Int, maxValue: Int): RootProcess {
     return rootProcess
 
 //    rootProcess.beginProcess()
-//    time = rootProcess.timeConsuming
+//    kotlin.getTime = rootProcess.timeConsuming
 //    rootProcess.timeConsuming = 0
 
 //    MPI.COMM_WORLD.Barrier()
@@ -116,7 +118,7 @@ fun workProcess() {
 
 object HyperCubeCreator {
     fun createCartComm(N: Int) =
-            mpi.MPI.COMM_WORLD.Create_cart(
+            MPI.COMM_WORLD.Create_cart(
                     createDims(N),
                     createPeriods(N),
                     createReorder()

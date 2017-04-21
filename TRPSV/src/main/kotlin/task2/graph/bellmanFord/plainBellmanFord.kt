@@ -1,12 +1,12 @@
 package task2.graph.bellmanFord
 
-import task2.graph.InputGraph
 import task2.graph.INFINITE
+import task2.graph.InputGraph
 import task2.graph.PlainAdjacency
 import task2.graph.PlainAdjacencyList
 import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
-import task2.graph.Util.PlainAdjacencyListUtil.edgeNumber
 import task2.graph.Util.PlainAdjacencyListUtil.get
+import task2.graph.Util.PlainAdjacencyListUtil.edgeNumber
 
 inline fun bellmanFord(graph: InputGraph) = with(graph) {
     bellmanFord(
@@ -17,8 +17,8 @@ inline fun bellmanFord(graph: InputGraph) = with(graph) {
 
 
 fun bellmanFord(plainAdjacencyList: PlainAdjacencyList,
-                       sourceVertex: Int,
-                       vertexNumber: Int): IntArray =
+                sourceVertex: Int,
+                vertexNumber: Int): IntArray =
         IntArray(vertexNumber, { INFINITE })
                 .apply { this[sourceVertex] = 0 }
                 .apply { while (plainAdjacencyList.relaxAll(this)); }

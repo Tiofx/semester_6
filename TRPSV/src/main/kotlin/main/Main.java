@@ -1,6 +1,5 @@
 package main;
 
-import main.Quicksort;
 import mpi.Comm;
 import mpi.MPI;
 

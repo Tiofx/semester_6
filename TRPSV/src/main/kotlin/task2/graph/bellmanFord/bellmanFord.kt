@@ -7,7 +7,6 @@ import task2.graph.Util.AdjacencyUtil.destination
 import task2.graph.Util.AdjacencyUtil.source
 import task2.graph.Util.AdjacencyUtil.weight
 
-
 fun bellmanFord(adjacencyList: AdjacencyList,
                 sourceVertex: Int,
                 vertexNumber: Int,

@@ -1,3 +1,5 @@
+package main.kotlin
+
 import task2.task2
 import java.io.File
 import java.util.*
@@ -8,13 +10,13 @@ val elementNumber = 8 * 1e3.toInt()
 val iterationNumber = 88
 
 
-//val elementNumber = 32
-//val iterationNumber = 1
+//val kotlin.getElementNumber = 32
+//val kotlin.getIterationNumber = 1
 //
 fun main(args: Array<String>) {
 //    val parallelTime = work(args)
 
-//    parallelBellmanFord(args, iterationNumber, iterationNumber)
+//    parallelBellmanFord(args, kotlin.getIterationNumber, kotlin.getIterationNumber)
 //    test()
     task2(args)
 
@@ -26,10 +28,10 @@ fun main(args: Array<String>) {
 //
 //        println("""
 //            |-------------------------------------------------------------
-//            | количество элементов: $elementNumber
-//            | количество итераций: $iterationNumber
-//            | затраченное время на последовательную реализацию: ${sort(elementNumber, iterationNumber) / 1e6} мс
-//            | затраченное время на параллельную реализацию:     ${parallelTime.drop((iterationNumber * 0.1).toInt()).average() / 1e6} мс
+//            | количество элементов: $kotlin.getElementNumber
+//            | количество итераций: $kotlin.getIterationNumber
+//            | затраченное время на последовательную реализацию: ${sort(kotlin.getElementNumber, kotlin.getIterationNumber) / 1e6} мс
+//            | затраченное время на параллельную реализацию:     ${parallelTime.drop((kotlin.getIterationNumber * 0.1).toInt()).average() / 1e6} мс
 //            |-------------------------------------------------------------
 //    """.trimMargin())
 

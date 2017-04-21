@@ -1,7 +1,10 @@
 package task2
 
 import mpi.MPI
-import task2.graph.*
+import task2.graph.INFINITE
+import task2.graph.InputGraph
+import task2.graph.adjacencyMatrix
+import task2.graph.random
 
 typealias ParallelAndSequentialTime = Pair<Double, Double>
 

@@ -1,3 +1,5 @@
+package main.kotlin
+
 import mpi.MPI
 import kotlin.system.measureNanoTime
 
@@ -31,7 +33,7 @@ open class RootProcess(val hyperCubeSize: Int, var array: IntArray) {
 
     //TODO: optimize
     fun sendOutArray() {
-//        MPI.COMM_WORLD.Scatter(array, 0, elementsOPerProcess, MPI.INT, array, 0, array.size, MPI.INT, ROOT)
+//        MPI.COMM_WORLD.Scatter(array, 0, elementsOPerProcess, MPI.INT, array, 0, array.size, MPI.INT, kotlin.getROOT)
 
 //        @Deprecated
         for (i in 0..p - 1) {

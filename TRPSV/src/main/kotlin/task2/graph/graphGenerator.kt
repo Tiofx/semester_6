@@ -1,7 +1,7 @@
 package task2.graph
 
-import task2.graph.Util.AdjacencyMatrixUtil.toAdjacencyList
 import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
+import task2.graph.Util.AdjacencyMatrixUtil.toAdjacencyList
 
 private inline operator fun AdjacencyMatrix.set(range: IntRange, value: Int) =
         range.forEach { this[it][it] = value }

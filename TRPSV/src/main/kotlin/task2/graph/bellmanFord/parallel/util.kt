@@ -4,7 +4,6 @@ import mpi.Datatype
 import mpi.MPI
 import task2.graph.Util.PlainAdjacencyListUtil.edgeNumber
 
-
 data class EdgeSegment(val startEdge: Int, val endEdge: Int)
 
 fun Work.EdgeSegment(edgeNumber: Int = plainAdjacencyList.edgeNumber): EdgeSegment {

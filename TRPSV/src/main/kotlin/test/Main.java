@@ -1,4 +1,4 @@
-package test;
+package main.kotlin.test;
 
 import mpi.Comm;
 import mpi.MPI;

@@ -1,3 +1,5 @@
+package main.kotlin
+
 import mpi.Cartcomm
 import mpi.MPI
 import kotlin.properties.Delegates
@@ -19,7 +21,7 @@ open class WorkProcessDebug(val coords: IntArray, val N: Int, val hyperCube: Car
 
         val measureTimeMillis = measureTimeMillis {
 
-            array = kotlin.IntArray(rootProcess!!.elementsOPerProcess)
+            array = IntArray(rootProcess!!.elementsOPerProcess)
 
             MPI.COMM_WORLD.Scatter(rootProcess?.array, 0, array.size, MPI.INT, array, 0, array.size, MPI.INT, ROOT)
 
@@ -30,7 +32,7 @@ open class WorkProcessDebug(val coords: IntArray, val N: Int, val hyperCube: Car
             println(array.str())
 
             MPI.COMM_WORLD.Gather(array, 0, array.size, MPI.INT, rootProcess?.array, 0, array.size, MPI.INT, ROOT)
-//            MPI.COMM_WORLD.Gatherv(array, 0, array.size, MPI.INT, rootProcess?.array, 0, , MPI.INT, ROOT)
+//            MPI.COMM_WORLD.Gatherv(array, 0, array.size, MPI.INT, rootProcess?.array, 0, , MPI.INT, kotlin.getROOT)
         }
 
 

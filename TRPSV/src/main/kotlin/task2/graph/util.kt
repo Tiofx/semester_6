@@ -78,7 +78,6 @@ object Util {
 
         inline operator fun PlainAdjacencyList.get(index: Int, content: PlainAdjacency) = this[index, content.number]
 
-
         val PlainAdjacencyList.edgeNumber: Int
             get() = (this.size + 1) / 3
 
