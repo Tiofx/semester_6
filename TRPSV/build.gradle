@@ -40,13 +40,13 @@ repositories {
     mavenCentral()
 }
 
-
 dependencies {
     compile mpjJar
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
 
-//    compile group: "golem", name: "golem-backend-mtj", version: "0.9"
-//    compile group: "golem", name: "golem-core", version: "0.9"
+    compile 'com.beust:klaxon:0.30+'
+    compile group: "golem", name: "golem-backend-mtj", version: "0.9+"
+    compile group: "golem", name: "golem-core", version: "0.9+"
 }
 
 run {

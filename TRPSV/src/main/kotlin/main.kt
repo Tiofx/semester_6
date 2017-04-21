@@ -1,6 +1,10 @@
 package main.kotlin
 
-import task2.task2
+import com.beust.klaxon.json
+import mpi.MPI
+import task2.test.makeTest
+import task2.test.testSet
+import task2.test.toJson
 import java.io.File
 import java.util.*
 import kotlin.system.measureNanoTime
@@ -18,7 +22,17 @@ fun main(args: Array<String>) {
 
 //    parallelBellmanFord(args, kotlin.getIterationNumber, kotlin.getIterationNumber)
 //    test()
-    task2(args)
+
+    MPI.Init(args)
+    val rank = MPI.COMM_WORLD.Rank()
+    MPI.Finalize()
+
+    val makeTest = makeTest(args, testSet("temp.json"))
+    if (rank == 0) {
+        println(makeTest.toJson().toJsonString(true))
+    }
+
+//    task2(args)
 
 //    if (MPI.COMM_WORLD.Rank() == 0) {
 //        println(parallelTime

@@ -1,8 +1,8 @@
 package task2.graph.bellmanFord.parallel
 
 import mpi.MPI
-import task2.GenerateValues
-import task2.generateGraph
+import task2.test.GenerateValues
+import task2.test.generateGraph
 import task2.graph.*
 import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
 import task2.graph.Util.PlainAdjacencyListUtil.edgeNumber
