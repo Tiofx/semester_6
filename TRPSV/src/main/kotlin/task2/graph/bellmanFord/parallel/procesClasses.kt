@@ -9,6 +9,7 @@ import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
 import task2.graph.Util.PlainAdjacencyListUtil.edgeNumber
 import task2.graph.bellmanFord.relaxAll
 import kotlin.properties.Delegates
+import kotlin.system.measureNanoTime
 
 class WorkMaster(override var vertexNumber: Int,
                  override var sourceVertex: Int,
@@ -32,14 +33,19 @@ open class Work : AbstractProcess() {
     override val isRoot = false
 
     override protected fun mainWork() {
-        for (i in 0..vertexNumber - 1) {
-            val hasRelax = plainAdjacencyList.relaxAll(distance, edgeSegment.startEdge, edgeSegment.endEdge)
+        var hasRelax = true
 
+        for (i in 0..vertexNumber - 1) {
+            println("--- ${measureNanoTime { hasRelax = plainAdjacencyList.relaxAll(distance, edgeSegment.startEdge, edgeSegment.endEdge) } / 1e6}")
+//            hasRelax = plainAdjacencyList.relaxAll(distance, edgeSegment.startEdge, edgeSegment.endEdge)
+
+//            println("-AllReduce-- ${measureNanoTime { MPI.COMM_WORLD.Allreduce(distance, 0, temp, 0, vertexNumber, MPI.INT, MPI.MIN) } / 1e6}")
             MPI.COMM_WORLD.Allreduce(distance, 0, temp, 0, vertexNumber, MPI.INT, MPI.MIN)
 
             if (!hasRelax and (distance contentEquals temp)) break
 
             distance = temp.clone()
+//            println("--- ${measureNanoTime { } / 1e6}")
         }
     }
 
@@ -84,8 +90,13 @@ abstract class AbstractProcess {
     protected var temp by Delegates.notNull<IntArray>()
 
     fun work() {
-        preparation()
-        mainWork()
+        println("""
+        |${measureNanoTime { preparation() } / 1e6} мс
+        |${measureNanoTime { mainWork() } / 1e6} мс
+        |____
+        """.trimMargin())
+//        preparation()
+//        mainWork()
     }
 
     fun reset() {

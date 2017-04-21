@@ -5,8 +5,8 @@ import task2.graph.InputGraph
 import task2.graph.PlainAdjacency
 import task2.graph.PlainAdjacencyList
 import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
-import task2.graph.Util.PlainAdjacencyListUtil.get
 import task2.graph.Util.PlainAdjacencyListUtil.edgeNumber
+import task2.graph.Util.PlainAdjacencyListUtil.get
 
 inline fun bellmanFord(graph: InputGraph) = with(graph) {
     bellmanFord(
@@ -23,8 +23,9 @@ fun bellmanFord(plainAdjacencyList: PlainAdjacencyList,
                 .apply { this[sourceVertex] = 0 }
                 .apply { while (plainAdjacencyList.relaxAll(this)); }
 
-inline fun PlainAdjacencyList.relaxAll(distance: IntArray, from: Int = 0, to: Int = edgeNumber - 1) =
-        (from..to).map { relax(it, distance) }
+fun PlainAdjacencyList.relaxAll(distance: IntArray, from: Int = 0, to: Int = edgeNumber - 1) =
+        (from..to)
+                .map { relax(it, distance) }
                 .onEach { if (it) return@relaxAll true }
                 .let { false }
 

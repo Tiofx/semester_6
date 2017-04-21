@@ -2,6 +2,7 @@ package task2
 
 import mpi.MPI
 import task2.graph.InputGraph
+import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
 import task2.graph.adjacencyMatrix
 import task2.graph.bellmanFord.bellmanFord
 import task2.graph.bellmanFord.parallel.Work
@@ -9,14 +10,14 @@ import task2.graph.bellmanFord.parallel.WorkMaster
 import task2.graph.random
 import kotlin.system.measureNanoTime
 
-
 fun task2(args: Array<String>) {
-    val vertexNumber = 200
+    val vertexNumber = 1111
     val sourceVertex = random(vertexNumber - 1)
     val edgeProbability = 0.9
-    val maxWeight = 99
+    val maxWeight = 999999
 
-    val iterationNumber = 10
+
+    val iterationNumber = 22
 
     val inputGraph = InputGraph(adjacencyMatrix(vertexNumber, edgeProbability, maxWeight), sourceVertex)
     val parallelResult = parallelBellmanFord(args, inputGraph, iterationNumber)
@@ -34,20 +35,22 @@ fun task2(args: Array<String>) {
             |Количество итераций: $iterationNumber
             |=============================================
             |Параллельный алгоритм:
-            |${parallelResult.map { it }.average() / 1e6} мс
+            |${parallelResult.drop((iterationNumber * 0.1).toInt()).average() / 1e6} мс
             |====
             |Последовательный алгоритм:
-            |${sequentialResult.map { it }.average() / 1e6} мс
+            |${sequentialResult.average() / 1e6} мс
             """.trimMargin())
     }
 }
 
 fun sequentialBellmanFord(inputGraph: InputGraph, iterationNumber: Int): MutableList<Long> {
     val result = mutableListOf<Long>()
+    val (adjacencyMatrix, sourceVertex, vertexNumber) = inputGraph
+    val plainAdjacencyList = adjacencyMatrix.toPlainAdjacencyList()
 
     repeat(iterationNumber) {
         val nanoTime = measureNanoTime {
-            bellmanFord(inputGraph)
+            bellmanFord(plainAdjacencyList, sourceVertex, vertexNumber)
         }
         result.add(nanoTime)
     }
@@ -70,9 +73,9 @@ fun parallelBellmanFord(args: Array<String>, inputGraph: InputGraph, iterationNu
             process.work()
         }
 
-        if (rank == 0) {
-            println(process.distance contentEquals bellmanFord(inputGraph))
-        }
+//        if (rank == 0) {
+//            println(process.distance contentEquals bellmanFord(inputGraph))
+//        }
 
 
         if (rank == 0) result.add(nanoTime)
