@@ -1,10 +1,8 @@
 package task2
 
 import mpi.MPI
-import task2.graph.INFINITE
-import task2.graph.InputGraph
-import task2.graph.adjacencyMatrix
-import task2.graph.random
+import task2.graph.PlainAdjacencyList
+import task2.graph.plainAdjacencyList
 
 typealias ParallelAndSequentialTime = Pair<Double, Double>
 
@@ -17,7 +15,6 @@ data class TestTask(val iterationCoefficient: Double,
 data class GenerateGraphConfiguration(val vertexNumber: IntArray,
                                       val edgeProbability: DoubleArray)
 
-
 data class TestResult(val input: Input,
                       val processNumber: Int,
                       val nanoTime: ParallelAndSequentialTime)
@@ -25,6 +22,9 @@ data class TestResult(val input: Input,
 data class Input(val iterationNumber: Int,
                  val vertexNumber: Int,
                  val edgeProbability: Double)
+
+data class GenerateValues(val vertexNumber: Int,
+                          val edgeProbability: Double)
 
 
 fun makeTest(args: Array<String>, tests: TestSet): ResultSet {
@@ -46,7 +46,7 @@ fun makeTest(args: Array<String>, tests: TestSet): ResultSet {
                                         vertexSize,
                                         edgeProbability),
                                 processNumber,
-                                measureTask2(args, iterationNumber, vertexSize, edgeProbability)
+                                measureTask2(args, iterationNumber, GenerateValues(vertexSize, edgeProbability))
                         )
                     }
                 }.reduce { acc, testResult -> acc + testResult }
@@ -56,16 +56,13 @@ fun makeTest(args: Array<String>, tests: TestSet): ResultSet {
 }
 
 
-fun measureTask2(args: Array<String>, iterationNumber: Int, vertexNumber: Int, edgeProbability: Double):
+fun measureTask2(args: Array<String>, iterationNumber: Int, generateValues: GenerateValues):
         ParallelAndSequentialTime {
-    val sourceVertex = random(vertexNumber - 1)
-    val maxWeight = INFINITE / (vertexNumber * vertexNumber)
 
-    val inputGraph = InputGraph(adjacencyMatrix(vertexNumber, edgeProbability, maxWeight), sourceVertex)
-    val parallelResult = parallelBellmanFord(args, inputGraph, iterationNumber)
+    val parallelResult = parallelBellmanFord(args, generateValues, iterationNumber)
 
     if (MPI.COMM_WORLD.Rank() == 0) {
-        val sequentialResult = sequentialBellmanFord(inputGraph, iterationNumber)
+        val sequentialResult = sequentialBellmanFord(generateValues, iterationNumber)
 
         return parallelResult.average() to sequentialResult.average()
     }
@@ -74,4 +71,5 @@ fun measureTask2(args: Array<String>, iterationNumber: Int, vertexNumber: Int, e
 }
 
 
-
+fun GenerateValues.generateGraph(): PlainAdjacencyList =
+        plainAdjacencyList(vertexNumber, edgeProbability)

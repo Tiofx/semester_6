@@ -6,7 +6,7 @@ import task2.graph.Util.PlainAdjacencyListUtil.edgeNumber
 
 data class EdgeSegment(val startEdge: Int, val endEdge: Int)
 
-fun Work.EdgeSegment(edgeNumber: Int = plainAdjacencyList.edgeNumber): EdgeSegment {
+fun Work.EdgeSegment(edgeNumber: Int = this.edgeNumber): EdgeSegment {
     val edgePerProc = edgeNumber / procNum
     val startEdge = edgePerProc * rank
     val endEdge = if (rank != procNum - 1) startEdge + edgePerProc - 1 else edgeNumber - 1

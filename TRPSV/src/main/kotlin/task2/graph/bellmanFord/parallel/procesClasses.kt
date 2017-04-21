@@ -1,15 +1,13 @@
 package task2.graph.bellmanFord.parallel
 
 import mpi.MPI
-import task2.graph.AdjacencyMatrix
-import task2.graph.INFINITE
-import task2.graph.InputGraph
-import task2.graph.PlainAdjacencyList
+import task2.GenerateValues
+import task2.generateGraph
+import task2.graph.*
 import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
 import task2.graph.Util.PlainAdjacencyListUtil.edgeNumber
 import task2.graph.bellmanFord.relaxAll
 import kotlin.properties.Delegates
-import kotlin.system.measureNanoTime
 
 class WorkMaster(override var vertexNumber: Int,
                  override var sourceVertex: Int,
@@ -22,6 +20,9 @@ class WorkMaster(override var vertexNumber: Int,
 
     constructor(vertexNumber: Int, sourceVertex: Int, adjacencyMatrix: AdjacencyMatrix)
             : this(vertexNumber, sourceVertex, adjacencyMatrix.toPlainAdjacencyList())
+
+    constructor(graph: GenerateValues)
+            : this(graph.vertexNumber, random(graph.vertexNumber - 1), graph.generateGraph())
 }
 
 open class Work : AbstractProcess() {
@@ -36,16 +37,13 @@ open class Work : AbstractProcess() {
         var hasRelax = true
 
         for (i in 0..vertexNumber - 1) {
-            println("--- ${measureNanoTime { hasRelax = plainAdjacencyList.relaxAll(distance, edgeSegment.startEdge, edgeSegment.endEdge) } / 1e6}")
-//            hasRelax = plainAdjacencyList.relaxAll(distance, edgeSegment.startEdge, edgeSegment.endEdge)
+            hasRelax = plainAdjacencyList.relaxAll(distance, edgeSegment.startEdge, edgeSegment.endEdge)
 
-//            println("-AllReduce-- ${measureNanoTime { MPI.COMM_WORLD.Allreduce(distance, 0, temp, 0, vertexNumber, MPI.INT, MPI.MIN) } / 1e6}")
             MPI.COMM_WORLD.Allreduce(distance, 0, temp, 0, vertexNumber, MPI.INT, MPI.MIN)
 
             if (!hasRelax and (distance contentEquals temp)) break
 
             distance = temp.clone()
-//            println("--- ${measureNanoTime { } / 1e6}")
         }
     }
 
@@ -69,7 +67,8 @@ open class Work : AbstractProcess() {
         distance = IntArray(vertexNumber, { INFINITE })
         temp = IntArray(vertexNumber)
 
-        if (!isRoot) plainAdjacencyList = PlainAdjacencyList(3 * edgeNumber)
+//        if (!isRoot) plainAdjacencyList = PlainAdjacencyList(3 * edgeNumber)
+        if (!isRoot) plainAdjacencyList = PlainAdjacencyList(3 * vertexNumber * vertexNumber)
     }
 }
 
@@ -90,16 +89,16 @@ abstract class AbstractProcess {
     protected var temp by Delegates.notNull<IntArray>()
 
     fun work() {
-        println("""
-        |${measureNanoTime { preparation() } / 1e6} мс
-        |${measureNanoTime { mainWork() } / 1e6} мс
-        |____
-        """.trimMargin())
-//        preparation()
-//        mainWork()
+//        println("""
+//        |${measureNanoTime { preparation() } / 1e6} мс
+//        |${measureNanoTime { mainWork() } / 1e6} мс
+//        |____
+//        """.trimMargin())
+        preparation()
+        mainWork()
     }
 
-    fun reset() {
+    open fun reset() {
         distance.fill(INFINITE)
         temp.fill(0)
     }

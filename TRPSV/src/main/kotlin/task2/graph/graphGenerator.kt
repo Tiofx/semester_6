@@ -1,12 +1,14 @@
 package task2.graph
 
-import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
 import task2.graph.Util.AdjacencyMatrixUtil.toAdjacencyList
+import task2.graph.Util.AdjacencyMatrixUtil.toPlainAdjacencyList
 
 private inline operator fun AdjacencyMatrix.set(range: IntRange, value: Int) =
         range.forEach { this[it][it] = value }
 
-fun plainAdjacencyList(vertexNumber: Int, edgeProbability: Double, maxWeight: Int): PlainAdjacencyList =
+fun plainAdjacencyList(vertexNumber: Int,
+                       edgeProbability: Double,
+                       maxWeight: Int = INFINITE / (vertexNumber * vertexNumber)): PlainAdjacencyList =
         adjacencyMatrix(vertexNumber, edgeProbability, maxWeight)
                 .toPlainAdjacencyList()
 
