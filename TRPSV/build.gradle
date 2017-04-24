@@ -25,7 +25,8 @@ apply plugin: 'application'
 apply plugin: 'java'
 
 
-mainClassName = 'main.kotlin.MainKt'
+mainClassName = 'MainKt'
+run.systemProperties = System.properties
 
 //def mpjHome = '/Users/andrej/mpj-v0_44'
 def mpjHome = System.getenv('MPJ_HOME')
@@ -50,6 +51,8 @@ dependencies {
 }
 
 run {
+    println mpjHome
+//    def procNum = 2
     def procNum = JOptionPane.showInputDialog(null, "Введите количество процессов: ", "2")
 
     main = 'runtime.starter.MPJRun'

@@ -1,10 +1,6 @@
-package main.kotlin
-
-import com.beust.klaxon.json
-import mpi.MPI
 import task2.test.makeTest
 import task2.test.testSet
-import task2.test.toJson
+import visualization.allEdgeProbabilityPlot
 import java.io.File
 import java.util.*
 import kotlin.system.measureNanoTime
@@ -20,17 +16,29 @@ val iterationNumber = 88
 fun main(args: Array<String>) {
 //    val parallelTime = work(args)
 
-//    parallelBellmanFord(args, kotlin.getIterationNumber, kotlin.getIterationNumber)
-//    test()
+//    testTask3(args)
+    allEdgeProbabilityPlot(makeTest(args, testSet("temp.json")))
 
-    MPI.Init(args)
-    val rank = MPI.COMM_WORLD.Rank()
-    MPI.Finalize()
-
-    val makeTest = makeTest(args, testSet("temp.json"))
-    if (rank == 0) {
-        println(makeTest.toJson().toJsonString(true))
-    }
+//    MPI.Init(args)
+//    val rank = MPI.COMM_WORLD.Rank()
+//    MPI.Finalize()
+//
+//    val makeTest = makeTest(args, testSet("temp.json"))
+//    if (rank == 0) {
+//        val x = makeTest.results.map { it.input.vertexNumber }.toIntArray()
+//        val y1 = makeTest.results.map { it.millisecondTime.first }.toDoubleArray()
+//        val y2 = makeTest.results.map { it.millisecondTime.second }.toDoubleArray()
+//
+//        figure(1)
+//        plot(x, y1, lineLabel = "Параллельный алгоритм")
+//        plot(x, y2, "b", lineLabel = "Последовательный алгоритм")
+//        ylabel("Время, мс")
+//        xlabel("Количество вершин")
+//
+//        println(makeTest.toJson().toJsonString(true))
+//
+//        makeTest.results.groupBy { it.input.edgeProbability }
+//    }
 
 //    task2(args)
 
