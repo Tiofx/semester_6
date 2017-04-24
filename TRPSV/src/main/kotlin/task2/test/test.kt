@@ -50,7 +50,8 @@ fun measureTask2(args: Array<String>, iterationNumber: Int, generateValues: Gene
     if (MPI.COMM_WORLD.Rank() == 0) {
         val sequentialResult = sequentialBellmanFord(generateValues, iterationNumber)
 
-        return parallelResult.average() / 1e6 to sequentialResult.average() / 1e6
+        return parallelResult.drop(maxOf(3, (iterationNumber * 0.1).toInt())).average() / 1e6 to
+                sequentialResult.drop(maxOf(3, (iterationNumber * 0.1).toInt())).average() / 1e6
     }
 
     return -1.0 to -1.0

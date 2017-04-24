@@ -31,12 +31,14 @@ fun allEdgeProbabilityPlot(makeTest: ResultSet) {
     val x = makeTest.results.map { it.input.vertexNumber }.distinct().toIntArray()
     val groupByEdge = makeTest.results.groupBy { it.input.edgeProbability }
     var seqPar = 2
+    var comparisionNumber = 2 + groupByEdge.keys.count() + 1
 
     groupByEdge.forEach { edgeProbability, u ->
         allEdgeProbabilityPlot(x, u.map { it.millisecondTime.second }.toDoubleArray(), edgeProbability, 0)
         allEdgeProbabilityPlot(x, u.map { it.millisecondTime.first }.toDoubleArray(), edgeProbability, 1, true)
 
         sequentialAndParallelPlot(x, u.map { it.millisecondTime }, edgeProbability, seqPar)
+        sequentialAndParallelComparisonPlot(x, u.map { it.millisecondTime }, edgeProbability, comparisionNumber)
         seqPar++
     }
 }
@@ -58,5 +60,15 @@ fun sequentialAndParallelPlot(x: IntArray, y: List<ParallelAndSequentialTime>, e
 
     ylabel("Время, мс")
     xlabel("Количество вершин")
-    title("Сравнение последовательного и параллельного алгоритма при разряженности графа: $edgeProbability")
+    title("Последовательный и параллельный алгоритм при разряженности графа: $edgeProbability")
+}
+
+fun sequentialAndParallelComparisonPlot(x: IntArray, y: List<ParallelAndSequentialTime>, edgeProbability: Double, figure: Int) {
+    figure(figure)
+    plot(x, y.map { (it.second - it.first) / it.first }.map { 100 * it }.toDoubleArray(),
+            getNextColor(figure), "разяженность графа: ${edgeProbability}")
+
+    ylabel("Проценты, %")
+    xlabel("Количество вершин")
+    title("На сколько параллельный алгоритм эффективнее последовательного (при различных разряженностей графа)")
 }
