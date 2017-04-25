@@ -1,6 +1,9 @@
-package main.kotlin
+package task1
 
-import main.kotlin.HyperCubeCreator.createCartComm
+import elementNumber
+import generateArray
+import iterationNumber
+import task1.HyperCubeCreator.createCartComm
 import mpi.MPI
 import kotlin.properties.Delegates
 import kotlin.system.measureNanoTime
@@ -39,7 +42,7 @@ fun work(args: Array<String>): MutableList<Long> {
     if (rank == 0) {
         println("N = $N  p = $p")
 
-        rootProcess = rootProcess(elementNumber, elementNumber)
+        rootProcess = task1.rootProcess(elementNumber, elementNumber)
     }
 
     val start = MPI.Wtick()
@@ -48,7 +51,7 @@ fun work(args: Array<String>): MutableList<Long> {
 
         MPI.COMM_WORLD.Barrier()
 
-//        if (rank == 0) Thread({ rootProcess(kotlin.getElementNumber, kotlin.getElementNumber) }).start()
+//        if (rank == 0) Thread({ task1.rootProcess(kotlin.getElementNumber, kotlin.getElementNumber) }).start()
 
         totalTime.add(
                 measureNanoTime {
@@ -58,7 +61,7 @@ fun work(args: Array<String>): MutableList<Long> {
 
                     when (rank) {
                         in 0..p -> workProcess()
-                        else -> println("The process with rank=$rank is too lazy to work!")
+                        else -> println("The process with rank=$rank is too lazy to task1.work!")
                     }
 
                     if (rank == 0) {
@@ -90,9 +93,9 @@ fun rootProcess(arraySize: Int, maxValue: Int): RootProcess {
 
     return rootProcess
 
-//    rootProcess.beginProcess()
-//    kotlin.getTime = rootProcess.timeConsuming
-//    rootProcess.timeConsuming = 0
+//    task1.rootProcess.beginProcess()
+//    kotlin.getTime = task1.rootProcess.timeConsuming
+//    task1.rootProcess.timeConsuming = 0
 
 //    MPI.COMM_WORLD.Barrier()
 }
@@ -108,7 +111,7 @@ fun workProcess() {
 
     val coords = hyperCube.Coords(rank)
 //
-//    val workProcess = WorkProcessDebug(coords, N, hyperCube)
+//    val task1.workProcess = WorkProcessDebug(coords, N, hyperCube)
     val workProcess = WorkProcess(coords, N, hyperCube)
 
 //    if (rank != 0) MPI.COMM_WORLD.Barrier()

@@ -61,7 +61,7 @@ fun task2(args: Array<String>) {
 //        comm.Barrier()
 //
 //        val nanoTime = measureNanoTime {
-//            process.work()
+//            process.task1.work()
 //        }
 //
 ////        if (rank == 0) {

@@ -1,4 +1,4 @@
-package main.kotlin
+package task1
 
 fun IntArray.quickSort(from: Int = 0, to: Int = this.size - 1) {
     if (from < to) {

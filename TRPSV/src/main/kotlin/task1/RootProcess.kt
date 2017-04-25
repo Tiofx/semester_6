@@ -1,6 +1,9 @@
-package main.kotlin
+package task1
 
 import mpi.MPI
+import shuffle
+import task1.Operation
+import task1.pow
 import kotlin.system.measureNanoTime
 
 open class RootProcess(val hyperCubeSize: Int, var array: IntArray) {
@@ -12,7 +15,7 @@ open class RootProcess(val hyperCubeSize: Int, var array: IntArray) {
     var timeConsuming = -1L
 
     fun beginProcess() {
-//        println("root\n ${array.str()}")
+//        println("root\n ${array.task1.str()}")
 
 //        sendOutArray()
 
@@ -23,7 +26,7 @@ open class RootProcess(val hyperCubeSize: Int, var array: IntArray) {
             collectArray()
         }
 //        println(timeConsuming)
-//        println("root\n ${array.str()}")
+//        println("root\n ${array.task1.str()}")
     }
 
     fun resetArray() {

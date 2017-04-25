@@ -1,51 +1,53 @@
-package main.kotlin
-
+package task1
 import mpi.Cartcomm
 import mpi.MPI
+import task1.*
 import kotlin.properties.Delegates
-import kotlin.system.measureTimeMillis
 
-open class WorkProcessDebug(val coords: IntArray, val N: Int, val hyperCube: Cartcomm) {
+open class WorkProcess(val coords: IntArray, val N: Int, val hyperCube: Cartcomm) {
     protected var array: IntArray by Delegates.notNull<IntArray>()
     protected val pivotContainer = IntArray(1)
     val last = coords.lastIndexOf(1)
 
+    private var numberElement = 0
+    private var tempArray = IntArray(0)
+
     fun begin() {
+
+        receiveArray()
+
 //        MPI.COMM_WORLD.Barrier()
-        var rootProcess: RootProcess? = null
-        rootProcess = RootProcess(N, generateArray(elementNumber, elementNumber))
-        if (hyperCube.Rank(coords) == ROOT) {
-            println("${rootProcess?.array?.str()}")
-        }
 
+        mainLoop()
 
-        val measureTimeMillis = measureTimeMillis {
+//        MPI.COMM_WORLD.Barrier()
 
-            array = IntArray(rootProcess!!.elementsOPerProcess)
+        sendOutArray()
 
-            MPI.COMM_WORLD.Scatter(rootProcess?.array, 0, array.size, MPI.INT, array, 0, array.size, MPI.INT, ROOT)
+    }
 
-//            receiveArray()
-            mainLoop()
-//            sendOutArray()
-            println(array.size)
-            println(array.str())
+    protected fun receiveArray() {
+        val probeStatus = MPI.COMM_WORLD.Probe(ROOT, Operation.INIT_ARRAY_SEND.ordinal)
+        var receiveElementNumber = probeStatus.Get_count(MPI.INT)
+        array = IntArray(receiveElementNumber)
 
-            MPI.COMM_WORLD.Gather(array, 0, array.size, MPI.INT, rootProcess?.array, 0, array.size, MPI.INT, ROOT)
-//            MPI.COMM_WORLD.Gatherv(array, 0, array.size, MPI.INT, rootProcess?.array, 0, , MPI.INT, kotlin.getROOT)
-        }
+        val status = MPI.COMM_WORLD.Recv(array, 0, receiveElementNumber,
+                MPI.INT, ROOT, Operation.INIT_ARRAY_SEND.ordinal)
 
+        numberElement = status.Get_count(MPI.INT)
+        tempArray = IntArray(N * numberElement)
+    }
 
-
-        if (hyperCube.Rank(coords) == ROOT) {
-            println("${rootProcess?.array?.str()}")
-            time = measureTimeMillis
-        }
+    protected fun sendOutArray() {
+        MPI.COMM_WORLD.Isend(array, 0, array.size,
+                MPI.INT, ROOT, Operation.COLLECT_ARRAY.ordinal)
     }
 
     protected fun mainLoop() {
         for (i in 0..N - 1) {
             var pivot = -1
+
+//            MPI.COMM_WORLD.Barrier()
 
             if (isLeadProcess(i)) {
                 pivot = array.pivotCalculation()
@@ -57,14 +59,17 @@ open class WorkProcessDebug(val coords: IntArray, val N: Int, val hyperCube: Car
 
             val numberLessThanPivot = array.sortByPivot(pivot)
 
+//            MPI.COMM_WORLD.Barrier()
 
             coords.exchange(numberLessThanPivot, i)
+
+//            MPI.COMM_WORLD.Barrier()
+
         }
 
+//        array.task1.quickSort()
         array.sort()
     }
-
-    private fun isLeadProcess(i: Int) = last + 1 <= i
 
     protected fun receivePivot(): Int {
         MPI.COMM_WORLD.Recv(pivotContainer, 0, 1,
@@ -79,14 +84,18 @@ open class WorkProcessDebug(val coords: IntArray, val N: Int, val hyperCube: Car
         while (tempCoords.hasNext(i)) {
             tempCoords.next()
 
+//            if (i != 0 && tempCoords[i - 1] == 1 && this[i - 1] == 0) break
+
+//            println("====coor=${coords.task1.str()}= send pivot to ${hyperCube.Rank(tempCoords)} coors=${tempCoords.task1.str()}")
+
             MPI.COMM_WORLD.Isend(pivotContainer, 0, 1,
                     MPI.INT, hyperCube.Rank(tempCoords), Operation.PIVOT.ordinal)
         }
     }
 
 
+    //TODO: change on MPI_Sendrecv_replace
     protected fun IntArray.exchange(numberLessThanPivot: Int, i: Int) {
-
         val greater = this[i] == 1
         this.invert(i)
 
@@ -94,15 +103,27 @@ open class WorkProcessDebug(val coords: IntArray, val N: Int, val hyperCube: Car
         val count = countCalculate(greater, numberLessThanPivot, array.size)
         val destinationRank = hyperCube.Rank(this)
 
-
         MPI.COMM_WORLD.Isend(array, offset, count,
                 MPI.INT, destinationRank, Operation.EXCHANGE_WITH_PROCESS.ordinal)
+
+
+//        val recvStatus = MPI.COMM_WORLD.Recv(tempArray, 0, N * numberElement,
+//                MPI.INT, destinationRank, task1.Operation.EXCHANGE_WITH_PROCESS.ordinal)
+//        val receiveElementNumber = recvStatus.Get_count(MPI.INT)
+
+//        for (j in 0..receiveElementNumber - 1) {
+//            tempArray[j + receiveElementNumber] = array[j + offset]
+//        }
+
+//        array = tempArray.copyOfRange(0, receiveElementNumber + array.size)
+
 
         val probeStatus = MPI.COMM_WORLD.Probe(destinationRank, Operation.EXCHANGE_WITH_PROCESS.ordinal)
         var receiveElementNumber = probeStatus.Get_count(MPI.INT)
 
-
+//        //TODO: optimize
         if (array.size - count == receiveElementNumber && false) {
+//            val offset = offsetCalculate(!greater, numberLessThanPivot)
 
             MPI.COMM_WORLD.Recv(array,
                     offset,
@@ -111,6 +132,7 @@ open class WorkProcessDebug(val coords: IntArray, val N: Int, val hyperCube: Car
         } else {
             val offset = offsetCalculate(!greater, numberLessThanPivot)
             val count = countCalculate(!greater, numberLessThanPivot, array.size)
+
 
             val array2 = IntArray(count + receiveElementNumber)
             MPI.COMM_WORLD.Recv(array2, 0, receiveElementNumber,
@@ -124,6 +146,31 @@ open class WorkProcessDebug(val coords: IntArray, val N: Int, val hyperCube: Car
             array = array2
         }
 
+
         this.invert(i)
     }
 }
+
+
+fun IntArray.next() {
+    for (i in this.size - 1 downTo 0) {
+        if (this[i] == 0) {
+            this[i] = 1
+            // TODO: change on lambda with label
+            return
+        } else {
+            this[i] = 0
+        }
+    }
+}
+
+inline fun IntArray.hasNext(i: Int) = this.lastIndexOf(0) >= i
+
+
+inline fun WorkProcess.isLeadProcess(i: Int) = last + 1 <= i
+
+inline fun countCalculate(greater: Boolean, numberLessThanPivot: Int, size: Int)
+        = if (greater) numberLessThanPivot else size - numberLessThanPivot
+
+inline fun offsetCalculate(greater: Boolean, numberLessThanPivot: Int)
+        = if (greater) 0 else numberLessThanPivot

@@ -1,4 +1,5 @@
 import mpi.MPI
+import task1.quickSort
 import task2.test.*
 import task3.plotTask3Result
 import task3.testTask3
@@ -41,7 +42,7 @@ fun task3(args: Array<String>) {
 fun main(args: Array<String>) {
     task3(args)
 
-//    val parallelTime = work(args)
+//    val parallelTime = task1.work(args)
 
 
 //    if (MPI.COMM_WORLD.Rank() == 0) {

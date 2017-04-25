@@ -14,31 +14,18 @@ fun getNextColor(figure: Int): String {
     return figureColors[figure]!!.next().key
 }
 
-
-fun plot(makeTest: ResultSet) {
-    val x = makeTest.results.map { it.input.vertexNumber }.toIntArray()
-    val y1 = makeTest.results.map { it.millisecondTime.first }.toDoubleArray()
-    val y2 = makeTest.results.map { it.millisecondTime.second }.toDoubleArray()
-
-    figure(1)
-    golem.plot(x, y1, lineLabel = "Параллельный алгоритм")
-    golem.plot(x, y2, "b", lineLabel = "Последовательный алгоритм")
-    ylabel("Время, мс")
-    xlabel("Количество вершин")
-}
-
 fun allEdgeProbabilityPlot(makeTest: ResultSet) {
     val x = makeTest.results.map { it.input.vertexNumber }.distinct().toIntArray()
     val groupByEdge = makeTest.results.groupBy { it.input.edgeProbability }
     var seqPar = 2
-    var comparisionNumber = 2 + groupByEdge.keys.count() + 1
+    var comparisonNumber = 2 + groupByEdge.keys.count() + 1
 
     groupByEdge.forEach { edgeProbability, u ->
         allEdgeProbabilityPlot(x, u.map { it.millisecondTime.second }.toDoubleArray(), edgeProbability, 0)
         allEdgeProbabilityPlot(x, u.map { it.millisecondTime.first }.toDoubleArray(), edgeProbability, 1, true)
 
         sequentialAndParallelPlot(x, u.map { it.millisecondTime }, edgeProbability, seqPar)
-        sequentialAndParallelComparisonPlot(x, u.map { it.millisecondTime }, edgeProbability, comparisionNumber)
+        sequentialAndParallelComparisonPlot(x, u.map { it.millisecondTime }, edgeProbability, comparisonNumber)
         seqPar++
     }
 }
@@ -70,5 +57,5 @@ fun sequentialAndParallelComparisonPlot(x: IntArray, y: List<ParallelAndSequenti
 
     ylabel("Проценты, %")
     xlabel("Количество вершин")
-    title("На сколько параллельный алгоритм эффективнее последовательного (при различных разряженностей графа)")
+    title("Зависимость эффективности параллельного алгоритма от количества вершин")
 }
