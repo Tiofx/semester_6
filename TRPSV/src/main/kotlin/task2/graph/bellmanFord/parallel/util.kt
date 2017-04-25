@@ -2,7 +2,6 @@ package task2.graph.bellmanFord.parallel
 
 import mpi.Datatype
 import mpi.MPI
-import task2.graph.Util.PlainAdjacencyListUtil.edgeNumber
 
 data class EdgeSegment(val startEdge: Int, val endEdge: Int)
 

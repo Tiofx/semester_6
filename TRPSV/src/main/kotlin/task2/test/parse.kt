@@ -57,7 +57,7 @@ fun Input.toJson() =
 fun ParallelAndSequentialTime.toJson() =
         json {
             obj(
-                    "parallel" to first,
+                    "parallelTask3" to first,
                     "sequential" to second
             )
         }

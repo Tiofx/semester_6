@@ -1,5 +1,5 @@
 {
-  "iterationCoefficient": 0.05,
+  "iterationCoefficient": 4,
   "graph": {
     "vertexNumber": [
       10,
