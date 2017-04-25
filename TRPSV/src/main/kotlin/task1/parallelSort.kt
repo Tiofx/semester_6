@@ -1,6 +1,5 @@
 package task1
 
-import elementNumber
 import golem.pow
 import mpi.MPI
 import task1.HyperCubeCreator.createCartComm
@@ -8,7 +7,6 @@ import kotlin.properties.Delegates
 import kotlin.system.measureNanoTime
 
 val ROOT: Int = 0
-var time: Long = 0
 
 fun parallelTask1(args: Array<String>, size: Int, iterationNumber: Int): MutableList<Long> {
     MPI.Init(args)
@@ -26,7 +24,7 @@ fun parallelTask1(args: Array<String>, size: Int, iterationNumber: Int): Mutable
     if (rank == 0) {
         println("N = $N  p = $p")
 
-        rootProcess = task1.rootProcess(size, elementNumber)
+        rootProcess = task1.rootProcess(size, size)
     }
 
     repeat(iterationNumber) {
@@ -55,7 +53,7 @@ fun parallelTask1(args: Array<String>, size: Int, iterationNumber: Int): Mutable
     }
 
     MPI.Finalize()
-    return if (rank == 0) totalTime else mutableListOf()
+    return totalTime
 }
 
 

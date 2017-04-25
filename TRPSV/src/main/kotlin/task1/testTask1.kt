@@ -2,21 +2,20 @@ package task1
 
 import mpi.MPI
 import task2.test.ParallelAndSequentialTime
-import task3.rank
 import kotlin.system.measureNanoTime
 
 fun iterationNumber(size: Int, parameter: Int = 1e6.div(3).toInt()) = parameter / size
 
 fun testTask1(args: Array<String>): MutableList<Pair<Int, ParallelAndSequentialTime>> {
     var size = 1000
-    val times = 2
+    val times = 5
     val result = mutableListOf<Pair<Int, ParallelAndSequentialTime>>()
 
     repeat(times) {
         val iterationNumber = iterationNumber(size)
         val measureTask3 = measureTask1(args, size, iterationNumber)
 
-        if (rank(args) == 0) {
+        if (MPI.COMM_WORLD.Rank() == 0) {
 
             println("""
             |size: $size

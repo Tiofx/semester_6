@@ -1,9 +1,6 @@
 package task1
 
 import mpi.MPI
-import shuffle
-import task1.Operation
-import task1.pow
 import kotlin.system.measureNanoTime
 
 open class RootProcess(val hyperCubeSize: Int, var array: IntArray) {

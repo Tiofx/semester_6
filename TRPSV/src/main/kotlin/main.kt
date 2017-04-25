@@ -7,9 +7,6 @@ import task3.testTask3
 import visualization.allEdgeProbabilityPlot
 import kotlin.system.measureNanoTime
 
-//
-val elementNumber = 8 * 1e3.toInt()
-val iterationNumber = 88
 
 fun task1(args: Array<String>) {
     val rank = rank(args)
