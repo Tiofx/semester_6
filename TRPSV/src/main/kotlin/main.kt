@@ -1,5 +1,4 @@
 import mpi.MPI
-import task1.quickSort
 import task2.test.*
 import task3.plotTask3Result
 import task3.testTask3
@@ -55,7 +54,7 @@ fun main(args: Array<String>) {
 //            |-------------------------------------------------------------
 //            | количество элементов: $kotlin.getElementNumber
 //            | количество итераций: $kotlin.getIterationNumber
-//            | затраченное время на последовательную реализацию: ${sort(kotlin.getElementNumber, kotlin.getIterationNumber) / 1e6} мс
+//            | затраченное время на последовательную реализацию: ${sequentialTask1(kotlin.getElementNumber, kotlin.getIterationNumber) / 1e6} мс
 //            | затраченное время на параллельную реализацию:     ${parallelTime.drop((kotlin.getIterationNumber * 0.1).toInt()).average() / 1e6} мс
 //            |-------------------------------------------------------------
 //    """.trimMargin())
@@ -63,70 +62,4 @@ fun main(args: Array<String>) {
 //    }
 }
 
-private fun sort(size: Int, iterationNumber: Int): Double {
-    val maxValue = size / 10
-    var array = generateArray(size, maxValue)
-    var totalSortTime = 0L
-
-    println("=========================")
-    println("=========================")
-    println("=========================")
-    println("=========================")
-    println("=========================")
-    println("=========================")
-
-    for (i in 0..iterationNumber - 1) {
-        val measureTimeMillis = measureNanoTime { array.quickSort() }
-        totalSortTime += measureTimeMillis
-//        println(measureTimeMillis)
-//        shuffle(array)
-        array = generateArray(size, maxValue)
-    }
-
-    println("====")
-
-    return totalSortTime / iterationNumber.toDouble()
-}
-
 const val filename: String = "array.txt"
-
-fun generateArray(size: Int, maxValue: Int): IntArray {
-    val numbers = IntArray(size)
-    val list = File(filename).readLines()
-            .flatMap { it.split(Regex("[ \t\n]")) }
-            .filter(String::isNotBlank)
-            .map(String::toInt)
-
-    if (list.isEmpty() || list[0] != size) {
-        val generator = Random()
-
-        for (i in numbers.indices) {
-            numbers[i] = generator.nextInt(maxValue)
-        }
-        return numbers
-
-//        File(filename).writeText(
-//                "$size\n" +
-//                        numbers.map(Any::toString)
-//                                .reduceRight { s, acc -> "$acc $s" }
-//        )
-
-//        return numbers
-    } else {
-        (0..size - 1).forEach { numbers[it] = list[it + 1] }
-
-        return numbers
-    }
-
-}
-
-fun shuffle(array: IntArray) {
-    val n = array.size
-    for (i in array.indices) {
-        val random = i + (Math.random() * (n - i)).toInt()
-
-        val randomElement = array[random]
-        array[random] = array[i]
-        array[i] = randomElement
-    }
-}
