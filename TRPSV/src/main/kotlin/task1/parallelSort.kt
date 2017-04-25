@@ -2,9 +2,8 @@ package task1
 
 import elementNumber
 import generateArray
-import iterationNumber
-import task1.HyperCubeCreator.createCartComm
 import mpi.MPI
+import task1.HyperCubeCreator.createCartComm
 import kotlin.properties.Delegates
 import kotlin.system.measureNanoTime
 
@@ -26,7 +25,7 @@ fun IntArray.invert(i: Int) {
 
 var time: Long = 0
 
-fun work(args: Array<String>): MutableList<Long> {
+fun parallelTask1(args: Array<String>, iterationNumber: Int): Double {
     MPI.Init(args)
 
     var totalTime = mutableListOf<Long>()
@@ -45,9 +44,9 @@ fun work(args: Array<String>): MutableList<Long> {
         rootProcess = task1.rootProcess(elementNumber, elementNumber)
     }
 
-    val start = MPI.Wtick()
+//    val start = MPI.Wtick()
 
-    for (i in 0..iterationNumber - 1) {
+    repeat(iterationNumber) {
 
         MPI.COMM_WORLD.Barrier()
 
@@ -61,7 +60,7 @@ fun work(args: Array<String>): MutableList<Long> {
 
                     when (rank) {
                         in 0..p -> workProcess()
-                        else -> println("The process with rank=$rank is too lazy to task1.work!")
+                        else -> println("The process with rank=$rank is too lazy to task1.parallelTask1!")
                     }
 
                     if (rank == 0) {
@@ -74,13 +73,13 @@ fun work(args: Array<String>): MutableList<Long> {
         MPI.COMM_WORLD.Barrier()
     }
 
-    val end = MPI.Wtick()
+//    val end = MPI.Wtick()
 
-    println("$rank:  ${(end - start)} ${(end - start).toDouble() / iterationNumber}")
+//    println("$rank:  ${(end - start)} ${(end - start).toDouble() / iterationNumber}")
 
     MPI.Finalize()
 
-    return if (rank == 0) totalTime else mutableListOf(-1)
+    return if (rank == 0) totalTime.average() / 1e6 else -1.0
 }
 
 

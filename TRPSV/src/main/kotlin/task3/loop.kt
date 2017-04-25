@@ -33,12 +33,12 @@ fun testTask3(args: Array<String>): MutableList<Triple<Int, Int, ParallelAndSequ
             result.add(Triple(iSize, jSize, measureTask3))
         }
 
-        iSize += 100
-        jSize += 100
+//        iSize += 100
+//        jSize += 100
 
 //        iSize *= 2
-//        jSize *= 2
-//        jSize -= 1
+        jSize *= 2
+        jSize -= 1
     }
 
     return result
@@ -96,6 +96,7 @@ fun sequentialTask3(iSize: Int, jSize: Int, iterationNumber: Int): MutableList<L
             for (i in 0..iSize - 1) {
                 for (j in 0..jSize - 1) {
                     writer.append(a[i, j].toString())
+//                    writer.append("${a[i, j]}")
                 }
                 writer.append("\n")
             }

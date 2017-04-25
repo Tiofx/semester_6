@@ -42,7 +42,7 @@ fun task3(args: Array<String>) {
 fun main(args: Array<String>) {
     task3(args)
 
-//    val parallelTime = task1.work(args)
+//    val parallelTime = task1.parallelTask1(args)
 
 
 //    if (MPI.COMM_WORLD.Rank() == 0) {
