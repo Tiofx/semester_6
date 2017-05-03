@@ -44,9 +44,9 @@ fun task3(args: Array<String>) {
 }
 
 fun main(args: Array<String>) {
-    task1(args)
+//    task1(args)
 //    task2(args)
-//    task3(args)
+    task3(args)
 }
 
 const val filename: String = "array.txt"

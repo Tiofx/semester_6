@@ -68,3 +68,5 @@ build/
 ## OS Specific
 .DS_Store
 Thumbs.db
+
+IAD/IAD_lab_2/src/main/resources/averageLifetime.txt

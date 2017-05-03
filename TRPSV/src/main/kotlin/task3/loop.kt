@@ -7,8 +7,8 @@ import java.io.PrintWriter
 import java.lang.StringBuilder
 import kotlin.system.measureNanoTime
 
-//fun iterationNumber(iSize: Int, jSize: Int, parameter: Int = 1e6.div(3).toInt()) = maxOf(15, parameter / (iSize * jSize))
-fun iterationNumber(iSize: Int, jSize: Int, parameter: Int = 1e6.div(3).toInt()) = 15
+fun iterationNumber(iSize: Int, jSize: Int, parameter: Int = 1e6.div(9).toInt()) = maxOf(5, parameter / (iSize * jSize))
+//fun iterationNumber(iSize: Int, jSize: Int, parameter: Int = 1e6.div(3).toInt()) = 5
 
 fun testTask3(args: Array<String>): MutableList<Triple<Int, Int, ParallelAndSequentialTime>> {
     var iSize = 60
@@ -30,15 +30,22 @@ fun testTask3(args: Array<String>): MutableList<Triple<Int, Int, ParallelAndSequ
             |parallelTask3: ${measureTask3.first} мс
             |______
         """.trimMargin())
+
             result.add(Triple(iSize, jSize, measureTask3))
         }
 
-//        iSize += 100
-//        jSize += 100
+//        iSize += 30
+//        jSize += 30
 
+        iSize += 100
+        jSize += 100
+//        iSize /= 2
+//        jSize *= 2
 //        iSize *= 2
-        jSize *= 2
-        jSize -= 1
+//        jSize /= 2
+        iSize -= (iSize) % MPI.COMM_WORLD.Size()
+        jSize -= (jSize - 1) % MPI.COMM_WORLD.Size()
+//        jSize -= 2
     }
 
     return result
@@ -64,6 +71,7 @@ fun measureTask3(args: Array<String>, iSize: Int, jSize: Int, iterationNumber: I
         |sequentialResult = ${sequentialResult.map { it / 1e6 }.toString()}
         |parallelResult = ${parallelResult.map { it / 1e6 }.toString()}
         """.trimMargin())
+
         return parallelResult.average() / 1e6 to sequentialResult.average() / 1e6
     }
 
@@ -84,6 +92,7 @@ fun sequentialTask3(iSize: Int, jSize: Int, iterationNumber: Int): MutableList<L
             for (i in 0..iSize - 1) {
                 for (j in 0..jSize - 1) {
                     a[i, j] = (10 * i + j).toDouble()
+//                    println(measureNanoTime { a[i, j] = (10 * i + j).toDouble() } / 1e6)
                 }
             }
 
@@ -103,7 +112,7 @@ fun sequentialTask3(iSize: Int, jSize: Int, iterationNumber: Int): MutableList<L
         }
 
         writer.close()
-        a.a.fill(0.0)
+//        a.a.fill(0.0)
 
         result.add(nanoTime)
     }
@@ -123,7 +132,6 @@ fun parallelTask3(args: Array<String>, iSize: Int, jSize: Int, iterationNumber: 
     val rank = comm.Rank()
     val procNumber = comm.Size()
 
-//    var recv: CharArray? = null
     val temp = DoubleArray(jSize - 1)
     val result = StringBuilder("")
     val perProc = iSize / procNumber
@@ -146,21 +154,19 @@ fun parallelTask3(args: Array<String>, iSize: Int, jSize: Int, iterationNumber: 
         MPI.COMM_WORLD.Barrier()
 
         val nanoTime = measureNanoTime {
-//            for (i in startIndex..endIndex) {
-//                for (j in 0..jSize - 1) {
-//                    a[i, j] = (10 * i + j).toDouble()
-//                }
-//            }
-//
-//            MPI.COMM_WORLD.Allgather(a.a, startIndex * jSize, (endIndex - startIndex + 1) * jSize, MPI.DOUBLE,
-//                    a.a, 0, (endIndex - startIndex + 1) * jSize, MPI.DOUBLE)
+            for (i in startIndex..endIndex) {
+                for (j in 0..jSize - 1) {
+                    a[i, j] = (10 * i + j).toDouble()
+                }
+            }
+
+            MPI.COMM_WORLD.Allgather(a.a, startIndex * jSize, (endIndex - startIndex + 1) * jSize, MPI.DOUBLE,
+                    a.a, 0, (endIndex - startIndex + 1) * jSize, MPI.DOUBLE)
 
             for (i in 1..iSize - 1) {
                 for (j in startIndex2..endIndex2) {
-                    a[i - 1, j] = (10 * (i - 1) + j).toDouble()
                     a[i, j - 1] = sin(1e-5 * a[i - 1, j])
                 }
-                a[i - 1, jSize - 1] = (10 * (i - 1) + jSize - 1).toDouble()
 
                 MPI.COMM_WORLD.Allgather(a.a, i * (jSize) + startIndex2 - 1, endIndex2 - startIndex2 + 1, MPI.DOUBLE,
                         temp, 0, endIndex2 - startIndex2 + 1, MPI.DOUBLE)
@@ -172,18 +178,12 @@ fun parallelTask3(args: Array<String>, iSize: Int, jSize: Int, iterationNumber: 
 
             }
 
-//            val nano = measureNanoTime {
-
-                for (i in startIndex..endIndex) {
-                    for (j in 0..jSize - 1) {
-                        result.append(a[i, j].toString())
-                    }
-                    result.append('\n')
+            for (i in startIndex..endIndex) {
+                for (j in 0..jSize - 1) {
+                    result.append(a[i, j].toString())
                 }
-//            } / 1e6
-
-//            println(nano)
-//
+                result.append('\n')
+            }
 
             val charArray = result.toString().toCharArray()
             val charsSize = IntArray(procNumber)
@@ -208,9 +208,9 @@ fun parallelTask3(args: Array<String>, iSize: Int, jSize: Int, iterationNumber: 
 
 
         }
-        writer.close()
-
-//        println(nanoTime2)
+        if (rank == 0) {
+            writer.close()
+        }
 
         timeResult.add(nanoTime)
     }

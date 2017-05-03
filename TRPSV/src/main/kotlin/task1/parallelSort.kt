@@ -21,10 +21,11 @@ fun parallelTask1(args: Array<String>, size: Int, iterationNumber: Int): Mutable
 
 
     var rootProcess by Delegates.notNull<RootProcess>()
-    if (rank == 0) {
-        println("N = $N  p = $p")
+    var workProcess = workProcess()
 
-        rootProcess = task1.rootProcess(size, size)
+    if (rank == 0) {
+//        println("N = $N  p = $p")
+        rootProcess = rootProcess(size, size)
     }
 
     repeat(iterationNumber) {
@@ -38,13 +39,15 @@ fun parallelTask1(args: Array<String>, size: Int, iterationNumber: Int): Mutable
                     }
 
                     when (rank) {
-                        in 0..p -> workProcess()
+//                        in 0..p -> workProcess()
+                        in 0..p -> workProcess.begin()
                         else -> println("The process with rank=$rank is too lazy to task1.parallelTask1!")
                     }
 
-                    if (rank == 0) {
-                        rootProcess.collectArray()
-                    }
+//                    if (rank == 0) {
+//                        rootProcess.collectArray()
+//                    }
+//                    MPI.COMM_WORLD.Barrier()
                 }
         )
 
@@ -67,7 +70,7 @@ fun rootProcess(arraySize: Int, maxValue: Int): RootProcess {
     return rootProcess
 }
 
-fun workProcess() {
+fun workProcess(): WorkProcess {
     val size = MPI.COMM_WORLD.Size()
     val rank = MPI.COMM_WORLD.Rank()
     val N = size.log2().floor()
@@ -76,5 +79,5 @@ fun workProcess() {
     val coords = hyperCube.Coords(rank)
     val workProcess = WorkProcess(coords, N, hyperCube)
 
-    workProcess.begin()
+    return workProcess
 }
