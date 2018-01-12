@@ -1,15 +1,15 @@
 package lab2.util;
 
-public final class TextPosition {
+public final class LogInfo {
     public int row;
     public int column;
 
-    public TextPosition(int row, int column) {
+    public LogInfo(int row, int column) {
         this.row = row;
         this.column = column;
     }
 
-    public TextPosition() {
+    public LogInfo() {
         this(1, 1);
     }
 
@@ -18,8 +18,8 @@ public final class TextPosition {
         return "(" + String.valueOf(row) + ", " + String.valueOf(column) + ")";
     }
 
-    public TextPosition copy() {
-        return new TextPosition(row, column);
+    public LogInfo copy() {
+        return new LogInfo(row, column);
     }
 
     public void reset() {

@@ -2,7 +2,7 @@ package lab2.main;
 
 import lab1.main.FiniteStateAutomaton;
 import lab2.util.LogContainer;
-import lab2.util.TextPosition;
+import lab2.util.LogInfo;
 import lab2.util.variantNative.CodesAnalyser;
 import lab2.util.variantNative.Constants;
 
@@ -16,7 +16,7 @@ import static lab2.util.variantNative.Code.Error;
 
 public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomaton {
     protected final List<LogContainer> log = new ArrayList<>();
-    protected TextPosition textPosition = new TextPosition();
+    protected LogInfo logInfo = new LogInfo();
     protected int mantissa = 0;
     protected int exponent = 0;
 
@@ -56,7 +56,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
                 updateTextPosition(character);
             }
 
-            log.add(new LogContainer(textPosition.copy(), currentState));
+            log.add(new LogContainer(logInfo.copy(), currentState));
 
             if (currentState <= DATA) {
                 currentState = 0;
@@ -96,10 +96,10 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
 
     protected void updateTextPosition(char character) {
         if (character != '\n') {
-            textPosition.column++;
+            logInfo.column++;
         } else {
-            textPosition.column = 1;
-            textPosition.row++;
+            logInfo.column = 1;
+            logInfo.row++;
             log.add(new LogContainer(null, CodesAnalyser.EOF));
         }
     }
@@ -126,7 +126,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
     public void reset() {
         super.reset();
         log.clear();
-        textPosition.reset();
+        logInfo.reset();
         resetFloatNumberInfo();
     }
 
