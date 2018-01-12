@@ -93,7 +93,7 @@ public class InputForm extends JPanel {
                 txtAreaLog.setCaretPosition(0);
 
                 txtCodes.setText(automation.getLog().stream()
-                        .map(logContainer -> String.valueOf(logContainer.getAutomationPosition()))
+                        .map(logContainer -> String.valueOf(logContainer.getLogInfo().getAutomationPosition()))
                         .map(s -> "-1".equals(s) ? "\n" : s + " ")
                         .filter(s -> !s.isEmpty())
                         .reduce("", String::concat));

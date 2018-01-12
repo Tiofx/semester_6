@@ -56,7 +56,9 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
                 updateTextPosition(character);
             }
 
-            log.add(new LogContainer(logInfo.copy(), currentState));
+            LogInfo copy = logInfo.copy();
+            copy.setAutomationPosition(currentState);
+            log.add(new LogContainer(copy));
 
             if (currentState <= DATA) {
                 currentState = 0;
@@ -100,7 +102,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         } else {
             logInfo.column = 1;
             logInfo.row++;
-            log.add(new LogContainer(null, CodesAnalyser.EOF));
+            log.add(new LogContainer(new LogInfo()));
         }
     }
 

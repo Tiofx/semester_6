@@ -7,12 +7,7 @@ public class LogContainer {
         this.logInfo = logInfo;
     }
 
-    @Override
-    public String toString() {
-        return logInfo.toString();
-    }
-
-    public int getAutomationPosition() {
-        return logInfo.getAutomationPosition();
+    public LogInfo getLogInfo() {
+        return logInfo;
     }
 }
