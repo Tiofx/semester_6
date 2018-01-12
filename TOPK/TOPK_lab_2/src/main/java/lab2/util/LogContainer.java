@@ -2,7 +2,7 @@ package lab2.util;
 
 public class LogContainer {
     protected LogInfo logInfo;
-    public int automationPosition;
+    protected int automationPosition;
 
     public LogContainer(LogInfo logInfo, int automationPosition) {
         this.logInfo = logInfo;
