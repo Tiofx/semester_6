@@ -11,7 +11,7 @@ import java.io.FileReader;
 
 
 public class Main {
-    
+
     private static void fromFileByLine(Automation automation, String filename) throws FileNotFoundException {
         new BufferedReader(new FileReader(new File(filename)))
                 .lines()
