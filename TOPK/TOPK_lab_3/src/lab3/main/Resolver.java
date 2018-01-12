@@ -41,7 +41,9 @@ public class Resolver {
             throw new IllegalArgumentException();
         }
 
-        if (!isComma()) {
+        boolean comma = codes.get(codeNumber++) == Code.Sign.COMMA;
+        
+        if (!comma) {
             errors.push(Error.Fragment.COMMA_AFTER_PROC);
             throw new IllegalArgumentException();
         }
@@ -58,7 +60,7 @@ public class Resolver {
 
         errors.clear();
 
-        if (!isComma()) {
+        if (!comma) {
             errors.push(Error.Fragment.COMMA_AFTER_END);
             throw new IllegalArgumentException();
         }
@@ -108,7 +110,7 @@ public class Resolver {
             return false;
         }
 
-        if (!isComma()) {
+        if (!(codes.get(codeNumber++) == Code.Sign.COMMA)) {
             errors.push(Error.Operator.COMMA_AFTER_EXPRESSION);
             throw new IllegalArgumentException();
         }
@@ -174,10 +176,6 @@ public class Resolver {
 
     protected boolean isIden() {
         return codes.get(codeNumber++) == Code.IDEN;
-    }
-
-    protected boolean isComma() {
-        return codes.get(codeNumber++) == Code.Sign.COMMA;
     }
 
     protected boolean isEqually() {
