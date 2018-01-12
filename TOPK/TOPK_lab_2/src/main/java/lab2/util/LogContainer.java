@@ -11,6 +11,6 @@ public class LogContainer {
 
     @Override
     public String toString() {
-        return "(" + String.valueOf(textPosition.row) + ", " + String.valueOf(textPosition.column) + ")";
+        return textPosition.toString();
     }
 }

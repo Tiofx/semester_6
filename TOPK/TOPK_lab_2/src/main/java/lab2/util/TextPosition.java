@@ -13,10 +13,15 @@ public final class TextPosition {
         this(1, 1);
     }
 
+    @Override
+    public String toString() {
+        return "(" + String.valueOf(row) + ", " + String.valueOf(column) + ")";
+    }
+
     public TextPosition copy() {
         return new TextPosition(row, column);
     }
-
+    
     public void reset() {
         row = 1;
         column = 1;
