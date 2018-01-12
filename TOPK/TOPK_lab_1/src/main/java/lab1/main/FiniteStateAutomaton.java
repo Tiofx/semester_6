@@ -33,9 +33,8 @@ public class FiniteStateAutomaton {
     }
 
     public Result check(String string) {
-        int result = 0;
-
-        result = resultState(string, result);
+        final int startState = 0;
+        final int result = resultState(string, startState);
 
         return result == ERROR_CODE ? Result.WRONG
                 : endStates.contains(result) ? Result.RIGHT
