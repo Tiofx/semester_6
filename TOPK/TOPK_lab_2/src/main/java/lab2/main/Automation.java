@@ -1,9 +1,7 @@
 package lab2.main;
 
 import lab1.main.FiniteStateAutomaton;
-import lab2.util.LogContainer;
 import lab2.util.LogInfo;
-import lab2.util.variantNative.CodesAnalyser;
 import lab2.util.variantNative.Constants;
 
 import java.util.ArrayList;
@@ -15,7 +13,7 @@ import static lab2.util.variantNative.Code.*;
 import static lab2.util.variantNative.Code.Error;
 
 public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomaton {
-    protected final List<LogContainer> log = new ArrayList<>();
+    protected final List<LogInfo> log = new ArrayList<>();
     protected LogInfo logInfo = new LogInfo();
     protected int mantissa = 0;
     protected int exponent = 0;
@@ -29,7 +27,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         super(alphabet, transitionTable, firstState, finalState);
     }
 
-    public List<LogContainer> getLog() {
+    public List<LogInfo> getLog() {
         return log;
     }
 
@@ -58,7 +56,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
 
             LogInfo copy = logInfo.copy();
             copy.setAutomationPosition(currentState);
-            log.add(new LogContainer(copy));
+            log.add(copy);
 
             if (currentState <= DATA) {
                 currentState = 0;
@@ -102,7 +100,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         } else {
             logInfo.column = 1;
             logInfo.row++;
-            log.add(new LogContainer(new LogInfo()));
+            log.add(new LogInfo());
         }
     }
 

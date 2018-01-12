@@ -1,5 +1,7 @@
 package lab2.util;
 
+import lab2.util.variantNative.CodesAnalyser;
+
 public final class LogInfo {
     public int row;
     public int column;
@@ -12,7 +14,7 @@ public final class LogInfo {
     }
 
     public LogInfo() {
-        this(1, 1, -1);
+        this(1, 1, CodesAnalyser.EOF);
     }
 
     public int getAutomationPosition() {
@@ -35,6 +37,6 @@ public final class LogInfo {
     public void reset() {
         row = 1;
         column = 1;
-        automationPosition = -1;
+        automationPosition = CodesAnalyser.EOF;
     }
 }

@@ -4,15 +4,14 @@ import lab2.util.AutomationFactory;
 import lab2.util.variantNative.CodesAnalyser;
 import lab2.util.variantNative.Constants;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 
 public class Main {
-
-    private static void sendLines(BufferedReader from, Automation to) {
-        from.lines().forEach(to::sendLine);
-    }
-
+    
     private static void fromFileByLine(Automation automation, String filename) throws FileNotFoundException {
         new BufferedReader(new FileReader(new File(filename)))
                 .lines()
