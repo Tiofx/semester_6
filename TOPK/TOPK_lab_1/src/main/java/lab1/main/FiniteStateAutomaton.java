@@ -42,15 +42,16 @@ public class FiniteStateAutomaton {
     }
 
     private int resultState(String string, int startState) {
+        int result = startState;
         try {
             for (int i = 0; i < string.length(); i++) {
-                startState = table[alphabet.getOrDefault(string.charAt(i), -1)][startState];
+                result = table[alphabet.getOrDefault(string.charAt(i), -1)][result];
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            startState = ERROR_CODE
+            result = ERROR_CODE
         }
 
-        return startState;
+        return result;
     }
 
     public boolean isEnd(int stateNumber) {
