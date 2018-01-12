@@ -38,7 +38,7 @@ public class FiniteStateAutomaton {
         result = resultState(string, result);
 
         return result == ERROR_CODE ? Result.WRONG
-                : isEndState(result) ? Result.RIGHT
+                : endStates.contains(result) ? Result.RIGHT
                 : Result.ONGOING;
     }
 
@@ -54,11 +54,7 @@ public class FiniteStateAutomaton {
 
         return result;
     }
-
-    public boolean isEndState(int stateNumber) {
-        return endStates.contains(stateNumber);
-    }
-
+    
 
     public abstract static class AbstractFiniteStateAutomaton {
         protected final Map<Character, Integer> alphabet;
