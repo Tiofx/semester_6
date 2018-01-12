@@ -17,33 +17,8 @@ import static lab2.util.variantNative.Code.Error;
 public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomaton {
     protected final List<LogContainer> log = new ArrayList<>();
     protected TextPosition textPosition = new TextPosition();
-    protected FloatNumberInfo floatNumberInfo = new FloatNumberInfo();
-
-    class FloatNumberInfo {
-        protected int mantissa = 0;
-        protected int exponent = 0;
-
-        public int getMantissa() {
-            return mantissa;
-        }
-
-        public int getExponent() {
-            return exponent;
-        }
-
-        public void incMantissa() {
-            mantissa++;
-        }
-
-        public void incExponent() {
-            exponent++;
-        }
-
-        public void reset() {
-            mantissa = 0;
-            exponent = 0;
-        }
-    }
+    protected int mantissa = 0;
+    protected int exponent = 0;
 
 
     protected Automation() {
@@ -103,18 +78,18 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         if (currentState >= 14 && currentState <= 19 || currentState == DATA) {
 
             if (currentState == 14 || currentState == 16) {
-                floatNumberInfo.incMantissa();
+                mantissa++;
             }
 
             if (currentState == 19) {
-                floatNumberInfo.incExponent();
+                exponent++;
             }
 
-            if (currentState == DATA && (floatNumberInfo.mantissa > 6 || floatNumberInfo.exponent != 2)) {
+            if (currentState == DATA && (mantissa > 6 || exponent != 2)) {
                 currentState = Error.IN_CONSTANT;
             }
         } else {
-            floatNumberInfo.reset();
+            resetFloatNumberInfo();
         }
     }
 
@@ -152,7 +127,12 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         super.reset();
         log.clear();
         textPosition.reset();
-        floatNumberInfo.reset();
+        resetFloatNumberInfo();
+    }
+
+    protected void resetFloatNumberInfo() {
+        mantissa = 0;
+        exponent = 0;
     }
 }
 
