@@ -39,7 +39,7 @@ public class FiniteStateAutomaton {
                 result = table[alphabet.getOrDefault(string.charAt(i), -1)][result];
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            return Result.WRONG;
+            result = ERROR_CODE
         }
 
         return result == ERROR_CODE ? Result.WRONG
