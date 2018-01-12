@@ -21,7 +21,7 @@ public final class TextPosition {
     public TextPosition copy() {
         return new TextPosition(row, column);
     }
-    
+
     public void reset() {
         row = 1;
         column = 1;
