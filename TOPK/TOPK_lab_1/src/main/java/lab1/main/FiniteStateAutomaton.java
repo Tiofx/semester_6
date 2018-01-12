@@ -34,17 +34,23 @@ public class FiniteStateAutomaton {
     public Result check(String string) {
         int result = 0;
 
-        try {
-            for (int i = 0; i < string.length(); i++) {
-                result = table[alphabet.getOrDefault(string.charAt(i), -1)][result];
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            result = ERROR_CODE
-        }
+        result = resultState(string, result);
 
         return result == ERROR_CODE ? Result.WRONG
                 : isEnd(result) ? Result.RIGHT
                 : Result.ONGOING;
+    }
+
+    private int resultState(String string, int startState) {
+        try {
+            for (int i = 0; i < string.length(); i++) {
+                startState = table[alphabet.getOrDefault(string.charAt(i), -1)][startState];
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            startState = ERROR_CODE
+        }
+
+        return startState;
     }
 
     public boolean isEnd(int stateNumber) {
