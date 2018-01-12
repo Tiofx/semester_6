@@ -1,0 +1,24 @@
+package lab2.util;
+
+public final class TextPosition {
+    public int row;
+    public int column;
+
+    public TextPosition(int row, int column) {
+        this.row = row;
+        this.column = column;
+    }
+
+    public TextPosition() {
+        this(1, 1);
+    }
+
+    public TextPosition copy() {
+        return new TextPosition(row, column);
+    }
+
+    public void reset() {
+        row = 1;
+        column = 1;
+    }
+}

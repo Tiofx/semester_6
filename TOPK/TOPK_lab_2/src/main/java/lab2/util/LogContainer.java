@@ -1,19 +1,16 @@
 package lab2.util;
 
 public class LogContainer {
-    public int rowTextPosition;
-    public int columnTextPosition;
-
+    public TextPosition textPosition;
     public int automationPosition;
 
-    public LogContainer(int rowTextPosition, int columnTextPosition, int automationPosition) {
-        this.rowTextPosition = rowTextPosition;
-        this.columnTextPosition = columnTextPosition;
+    public LogContainer(TextPosition textPosition, int automationPosition) {
+        this.textPosition = textPosition;
         this.automationPosition = automationPosition;
     }
 
     @Override
     public String toString() {
-        return "(" + String.valueOf(rowTextPosition) + ", " + String.valueOf(columnTextPosition) + ")";
+        return "(" + String.valueOf(textPosition.row) + ", " + String.valueOf(textPosition.column) + ")";
     }
 }
