@@ -3,14 +3,24 @@ package lab2.util;
 public final class LogInfo {
     public int row;
     public int column;
+    protected int automationPosition;
 
-    public LogInfo(int row, int column) {
+    public LogInfo(int row, int column, int automationPosition) {
         this.row = row;
         this.column = column;
+        this.automationPosition = automationPosition;
     }
 
     public LogInfo() {
-        this(1, 1);
+        this(1, 1, -1);
+    }
+
+    public int getAutomationPosition() {
+        return automationPosition;
+    }
+
+    public void setAutomationPosition(int automationPosition) {
+        this.automationPosition = automationPosition;
     }
 
     @Override
@@ -19,11 +29,12 @@ public final class LogInfo {
     }
 
     public LogInfo copy() {
-        return new LogInfo(row, column);
+        return new LogInfo(row, column, automationPosition);
     }
 
     public void reset() {
         row = 1;
         column = 1;
+        automationPosition = -1;
     }
 }

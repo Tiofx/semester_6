@@ -2,11 +2,9 @@ package lab2.util;
 
 public class LogContainer {
     protected LogInfo logInfo;
-    protected int automationPosition;
 
-    public LogContainer(LogInfo logInfo, int automationPosition) {
+    public LogContainer(LogInfo logInfo) {
         this.logInfo = logInfo;
-        this.automationPosition = automationPosition;
     }
 
     @Override
@@ -15,6 +13,6 @@ public class LogContainer {
     }
 
     public int getAutomationPosition() {
-        return automationPosition;
+        return logInfo.getAutomationPosition();
     }
 }
