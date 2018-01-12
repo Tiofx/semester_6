@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class FiniteStateAutomaton {
     public static final int ERROR_CODE = -1;
+    private List<Integer> endStates = List.of(3, 6, 7, 8);
 
     public enum Result {
         RIGHT, WRONG, ONGOING
@@ -32,24 +33,26 @@ public class FiniteStateAutomaton {
     }
 
     public Result check(String string) {
-        int result = 0;
-
-        try {
-            for (int i = 0; i < string.length(); i++) {
-                result = table[alphabet.getOrDefault(string.charAt(i), -1)][result];
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return Result.WRONG;
-        }
+        final int result = resultState(string, 0);
 
         return result == ERROR_CODE ? Result.WRONG
-                : isEnd(result) ? Result.RIGHT
+                : endStates.contains(result) ? Result.RIGHT
                 : Result.ONGOING;
     }
 
-    public boolean isEnd(int stateNumber) {
-        return List.of(3, 6, 7, 8).contains(stateNumber);
+    private int resultState(String string, int startState) {
+        int result = startState;
+        try {
+            for (int i = 0; i < string.length(); i++) {
+                char currentCharacter = string.charAt(i);
+                int numberOfCurrentCharacter = alphabet.getOrDefault(currentCharacter, -1);
+                result = table[numberOfCurrentCharacter][result];
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            result = ERROR_CODE;
+        }
 
+        return result;
     }
 
 
