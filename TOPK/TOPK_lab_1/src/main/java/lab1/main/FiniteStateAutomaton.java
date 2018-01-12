@@ -46,7 +46,9 @@ public class FiniteStateAutomaton {
         int result = startState;
         try {
             for (int i = 0; i < string.length(); i++) {
-                result = table[alphabet.getOrDefault(string.charAt(i), -1)][result];
+                char currentCharacter = string.charAt(i);
+                int numberOfCurrentCharacter = alphabet.getOrDefault(currentCharacter, -1);
+                result = table[numberOfCurrentCharacter][result];
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             result = ERROR_CODE;
@@ -54,7 +56,7 @@ public class FiniteStateAutomaton {
 
         return result;
     }
-    
+
 
     public abstract static class AbstractFiniteStateAutomaton {
         protected final Map<Character, Integer> alphabet;
