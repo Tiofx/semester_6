@@ -48,7 +48,7 @@ public class CodesAnalyser {
 
     public String interpret(LogContainer log) {
         if (!(log.automationPosition == EOF)) {
-            return log.textPosition.toString() + " " + interpret(log.automationPosition);
+            return log.toString() + " " + interpret(log.automationPosition);
         } else {
             return "\n";
         }

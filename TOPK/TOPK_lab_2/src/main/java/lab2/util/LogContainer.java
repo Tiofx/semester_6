@@ -8,4 +8,9 @@ public class LogContainer {
         this.textPosition = textPosition;
         this.automationPosition = automationPosition;
     }
+
+    @Override
+    public String toString() {
+        return textPosition.toString();
+    }
 }
