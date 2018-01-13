@@ -128,10 +128,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
             super.tryTransition(Character.toUpperCase(character));
 
         } catch (ArrayIndexOutOfBoundsException e) {
-
-            int stateByRow;
-            stateByRow = getStateByChar(character);
-            setCurrentState(stateByRow);
+            setCurrentState(getStateByChar(character));
         }
     }
 
