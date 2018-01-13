@@ -46,12 +46,9 @@ public class FiniteStateAutomaton {
         for (int i = 0; i < string.length(); i++) {
             char currentCharacter = string.charAt(i);
             int numberOfCurrentCharacter = alphabet.getOrDefault(currentCharacter, -1);
-
-            if (isIndexesInRange(result, numberOfCurrentCharacter)) {
-                result = table[numberOfCurrentCharacter][result];
-            } else {
-                return ERROR_CODE;
-            }
+            if (!isIndexesInRange(result, numberOfCurrentCharacter)) return ERROR_CODE;
+            
+            result = table[numberOfCurrentCharacter][result];
         }
 
         return result;
