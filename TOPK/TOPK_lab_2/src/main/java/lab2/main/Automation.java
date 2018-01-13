@@ -46,7 +46,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
     }
 
     private static char lastChar(String string) {
-        if (string.isEmpty()) throw new StringIndexOutOfBoundsException(-1);
+        if (string.isEmpty()) throw new StringIndexOutOfBoundsException("Empty string has no characters");
         return string.charAt(string.length() - 1);
     }
 
@@ -134,15 +134,15 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
     }
 
     private int getStateByChar(char character) {
-        int stateByRow;
         if (Character.isLetter(character)) {
-            stateByRow = getStateByRow(Constants.allLettersRowNumber);
+            return getStateByRow(Constants.allLettersRowNumber);
+
         } else if (Character.isDigit(character)) {
-            stateByRow = getStateByRow(Constants.allDigitRowNumber);
+            return getStateByRow(Constants.allDigitRowNumber);
+
         } else {
-            stateByRow = getStateByRow(Constants.L3RowNumber);
+            return getStateByRow(Constants.L3RowNumber);
         }
-        return stateByRow;
     }
 
 
