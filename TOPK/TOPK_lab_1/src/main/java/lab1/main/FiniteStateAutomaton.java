@@ -43,17 +43,23 @@ public class FiniteStateAutomaton {
 
     private int resultState(String string, int startState) {
         int result = startState;
-        try {
-            for (int i = 0; i < string.length(); i++) {
-                char currentCharacter = string.charAt(i);
-                int numberOfCurrentCharacter = alphabet.getOrDefault(currentCharacter, -1);
+
+        for (int i = 0; i < string.length(); i++) {
+            char currentCharacter = string.charAt(i);
+            int numberOfCurrentCharacter = alphabet.getOrDefault(currentCharacter, -1);
+
+            if (isIndexesInRange(result, numberOfCurrentCharacter)) {
                 result = table[numberOfCurrentCharacter][result];
+            } else {
+                return ERROR_CODE;
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            result = ERROR_CODE;
         }
 
         return result;
+    }
+
+    private boolean isIndexesInRange(int col, int row) {
+        return row >= 0 && row < table.length && col >= 0 && col < table[row].length;
     }
 
 
