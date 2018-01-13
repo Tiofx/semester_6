@@ -64,8 +64,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
 
             if (currentState <= DATA) {
                 currentState = 0;
-                result = sendCharacter(character);
-                return result;
+                return sendCharacter(character);
             } else {
                 currentState = 0;
             }
