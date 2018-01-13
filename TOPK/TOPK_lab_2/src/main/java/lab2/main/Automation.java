@@ -42,11 +42,11 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
     }
 
     private boolean isEndOfLine(String line) {
-        return lastChar(line) != '\n';
+        return line.isEmpty() || lastChar(line) != '\n';
     }
 
     private static char lastChar(String string) {
-        if (string.isEmpty()) return '\n';
+        if (string.isEmpty()) throw new StringIndexOutOfBoundsException(-1);
         return string.charAt(string.length() - 1);
     }
 
