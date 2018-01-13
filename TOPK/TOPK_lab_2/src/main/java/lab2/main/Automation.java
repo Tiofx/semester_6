@@ -46,6 +46,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
     }
 
     private static char lastChar(String string) {
+        if (string.isEmpty()) throw new StringIndexOutOfBoundsException("Empty string has no characters");
         return string.charAt(string.length() - 1);
     }
 
@@ -53,7 +54,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
     public boolean sendCharacter(char character) {
         boolean result = super.sendCharacter(character);
 
-        validateData(character);
+        validateData();
 
         int prevState = currentState;
         if (currentState >= BEGIN_CODE) {
@@ -79,11 +80,15 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         return result;
     }
 
+    public LogInfo getLogInfo() {
+        return logInfo;
+    }
+
     private boolean isSignsOrErrors(int state) {
         return (state >= SIGNS && state < ERRORS);
     }
 
-    protected void validateData(char character) {
+    protected void validateData() {
         if (currentState >= 14 && currentState <= 19 || currentState == DATA) {
 
             if (currentState == 14 || currentState == 16) {
@@ -109,10 +114,10 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
 
     protected void updateTextPosition(char character) {
         if (character != '\n') {
-            logInfo.column++;
+            getLogInfo().column++;
         } else {
-            logInfo.column = 1;
-            logInfo.row++;
+            getLogInfo().column = 1;
+            getLogInfo().row++;
             log.add(new LogInfo());
         }
     }
@@ -124,27 +129,29 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
             super.tryTransition(Character.toUpperCase(character));
 
         } catch (ArrayIndexOutOfBoundsException e) {
-
-            if (Character.isLetter(character)) {
-                setCurrentStateAsLetters();
-            } else if (Character.isDigit(character)) {
-                setCurrentStateAsDigit();
-            } else {
-                setCurrentStateAsL3();
-            }
+            setCurrentState(getStateByChar(character));
         }
     }
 
-    private void setCurrentStateAsL3() {
-        currentState = transitionTable[Constants.L3RowNumber][currentState];
+    private int getStateByChar(char character) {
+        if (Character.isLetter(character)) {
+            return getStateByRow(Constants.allLettersRowNumber);
+
+        } else if (Character.isDigit(character)) {
+            return getStateByRow(Constants.allDigitRowNumber);
+
+        } else {
+            return getStateByRow(Constants.L3RowNumber);
+        }
     }
 
-    private void setCurrentStateAsDigit() {
-        currentState = transitionTable[Constants.allDigitRowNumber][currentState];
+
+    private void setCurrentState(int value) {
+        currentState = value;
     }
 
-    private void setCurrentStateAsLetters() {
-        currentState = transitionTable[Constants.allLettersRowNumber][currentState];
+    private int getStateByRow(int row) {
+        return transitionTable[row][currentState];
     }
 
 
@@ -156,7 +163,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         resetFloatNumberInfo();
     }
 
-    protected void resetFloatNumberInfo() {
+    private void resetFloatNumberInfo() {
         mantissa = 0;
         exponent = 0;
     }

@@ -2,6 +2,7 @@ package lab1.main;
 
 import com.sun.tools.javac.util.List;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +15,7 @@ public class FiniteStateAutomaton {
         RIGHT, WRONG, ONGOING
     }
 
-    protected final Map<Character, Integer> alphabet = new HashMap<>();
+    protected final Map<Character, Integer> alphabet;
 
     protected final int table[][] = {
             {1, ERROR_CODE, 1, ERROR_CODE, 5, ERROR_CODE, 7, 7, 5},
@@ -23,17 +24,15 @@ public class FiniteStateAutomaton {
     };
 
     public FiniteStateAutomaton() {
-        loadAlphabet();
+        alphabet = Collections.unmodifiableMap(new HashMap<Character, Integer>() {{
+            put('a', 0);
+            put('b', 1);
+            put('c', 2);
+        }});
     }
 
-    protected void loadAlphabet() {
-        alphabet.put('a', 0);
-        alphabet.put('b', 1);
-        alphabet.put('c', 2);
-    }
-
-    public Result check(String string) {
-        final int resultState = resultState(string, 0);
+    public Result isValid(String string) {
+        final int resultState = resultState(string);
 
         if (resultState == ERROR_CODE) return Result.WRONG;
         if (endStates.contains(resultState)) return Result.RIGHT;
@@ -41,19 +40,25 @@ public class FiniteStateAutomaton {
         return Result.ONGOING;
     }
 
-    private int resultState(String string, int startState) {
-        int result = startState;
-        try {
-            for (int i = 0; i < string.length(); i++) {
-                char currentCharacter = string.charAt(i);
-                int numberOfCurrentCharacter = alphabet.getOrDefault(currentCharacter, -1);
+    private int resultState(String string) {
+        int result = 0;
+
+        for (int i = 0; i < string.length(); i++) {
+            char currentCharacter = string.charAt(i);
+            int numberOfCurrentCharacter = alphabet.getOrDefault(currentCharacter, -1);
+
+            if (isIndexesInRange(result, numberOfCurrentCharacter)) {
                 result = table[numberOfCurrentCharacter][result];
+            } else {
+                return ERROR_CODE;
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            result = ERROR_CODE;
         }
 
         return result;
+    }
+
+    private boolean isIndexesInRange(int col, int row) {
+        return row >= 0 && row < table.length && col >= 0 && col < table[row].length;
     }
 
 
