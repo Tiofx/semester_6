@@ -153,7 +153,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         resetFloatNumberInfo();
     }
 
-    protected void resetFloatNumberInfo() {
+    public void resetFloatNumberInfo() {
         mantissa = 0;
         exponent = 0;
     }
