@@ -2,6 +2,7 @@ package lab1.main;
 
 import com.sun.tools.javac.util.List;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +15,7 @@ public class FiniteStateAutomaton {
         RIGHT, WRONG, ONGOING
     }
 
-    protected final Map<Character, Integer> alphabet = new HashMap<>();
+    protected final Map<Character, Integer> alphabet;
 
     protected final int table[][] = {
             {1, ERROR_CODE, 1, ERROR_CODE, 5, ERROR_CODE, 7, 7, 5},
@@ -23,13 +24,11 @@ public class FiniteStateAutomaton {
     };
 
     public FiniteStateAutomaton() {
-        loadAlphabet();
-    }
-
-    protected void loadAlphabet() {
-        alphabet.put('a', 0);
-        alphabet.put('b', 1);
-        alphabet.put('c', 2);
+        alphabet = Collections.unmodifiableMap(new HashMap<Character, Integer>() {{
+            put('a', 0);
+            put('b', 1);
+            put('c', 2);
+        }});
     }
 
     public Result check(String string) {
