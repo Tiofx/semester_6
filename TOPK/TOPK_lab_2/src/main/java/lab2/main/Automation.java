@@ -36,15 +36,10 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
                 .mapToObj(i -> (char) i)
                 .forEach(this::sendCharacter);
 
-        if (isEndOfLine(line)) {
-            sendCharacter('\n');
-        }
+        if (line.length() == 0) sendCharacter('\n');
+        if (line.length() != 0 && line.charAt(line.length() - 1) != '\n') sendCharacter('\n');
     }
-
-    private boolean isEndOfLine(String line) {
-        return line.length() == 0 || line.charAt(line.length() - 1) != '\n';
-    }
-
+    
 
     @Override
     public boolean sendCharacter(char character) {
