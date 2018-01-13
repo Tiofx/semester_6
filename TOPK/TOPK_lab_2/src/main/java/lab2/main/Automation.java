@@ -45,6 +45,10 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         return line.length() == 0 || line.charAt(line.length() - 1) != '\n';
     }
 
+    private static char lastChar(String string) {
+        return string.charAt(string.length() - 1);
+    }
+
 
     @Override
     public boolean sendCharacter(char character) {
