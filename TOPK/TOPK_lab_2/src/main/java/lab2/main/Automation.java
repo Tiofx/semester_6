@@ -42,7 +42,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
     }
 
     private boolean isEndOfLine(String line) {
-        return line.length() == 0 || line.charAt(line.length() - 1) != '\n';
+        return line.isEmpty() || lastChar(line) != '\n';
     }
 
     private static char lastChar(String string) {
