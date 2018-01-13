@@ -42,7 +42,7 @@ public class FiniteStateAutomaton {
     }
 
     private int resultState(String string, int startState) {
-        int result = startState;
+        int result = 0;
 
         for (int i = 0; i < string.length(); i++) {
             char currentCharacter = string.charAt(i);
