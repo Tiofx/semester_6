@@ -132,14 +132,12 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
             int stateByRow;
             if (Character.isLetter(character)) {
                 stateByRow = getStateByRow(Constants.allLettersRowNumber);
-                setCurrentState(stateByRow);
             } else if (Character.isDigit(character)) {
                 stateByRow = getStateByRow(Constants.allDigitRowNumber);
-                setCurrentState(stateByRow);
             } else {
                 stateByRow = getStateByRow(Constants.L3RowNumber);
-                setCurrentState(stateByRow);
             }
+            setCurrentState(stateByRow);
         }
     }
 
