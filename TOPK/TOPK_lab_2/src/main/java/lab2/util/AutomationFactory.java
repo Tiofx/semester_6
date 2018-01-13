@@ -1,6 +1,7 @@
 package lab2.util;
 
 import lab2.main.Automation;
+import lab2.main.NullAutomation;
 import lab2.util.variantNative.VariantNumber21;
 
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public final class AutomationFactory {
                         builder.getFirstState(),
                         builder.getFinalStates());
             default:
-                return null;
+                return new NullAutomation();
         }
     }
 }

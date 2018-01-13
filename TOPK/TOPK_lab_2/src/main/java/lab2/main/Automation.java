@@ -49,7 +49,6 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         return string.charAt(string.length() - 1);
     }
 
-
     @Override
     public boolean sendCharacter(char character) {
         boolean result = super.sendCharacter(character);
@@ -147,6 +146,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
     private void setCurrentStateAsLetters() {
         currentState = transitionTable[Constants.allLettersRowNumber][currentState];
     }
+
 
     @Override
     public void reset() {
