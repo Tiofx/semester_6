@@ -36,9 +36,13 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
                 .mapToObj(i -> (char) i)
                 .forEach(this::sendCharacter);
 
-        if (line.length() == 0 || line.charAt(line.length() - 1) != '\n') {
+        if (isEndOfLine(line)) {
             sendCharacter('\n');
         }
+    }
+
+    private boolean isEndOfLine(String line) {
+        return line.length() == 0 || line.charAt(line.length() - 1) != '\n';
     }
 
 
@@ -50,7 +54,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
 
         int prevState = currentState;
         if (currentState >= BEGIN_CODE) {
-            if (currentState >= SIGNS && currentState < ERRORS) {
+            if (isSignsOrErrors(currentState)) {
                 updateTextPosition(character);
             }
 
@@ -67,11 +71,15 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
             }
         }
 
-        if (!(prevState >= SIGNS && prevState < ERRORS)) {
+        if (!isSignsOrErrors(prevState)) {
             updateTextPosition(character);
         }
 
         return result;
+    }
+
+    private boolean isSignsOrErrors(int state) {
+        return (state >= SIGNS && state < ERRORS);
     }
 
     protected void validateData(char character) {
@@ -85,12 +93,16 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
                 exponent++;
             }
 
-            if (currentState == DATA && (mantissa > 6 || exponent != 2)) {
+            if (isNotValidConstant()) {
                 currentState = Error.IN_CONSTANT;
             }
         } else {
             resetFloatNumberInfo();
         }
+    }
+
+    private boolean isNotValidConstant() {
+        return currentState == DATA && (mantissa > 6 || exponent != 2);
     }
 
 
