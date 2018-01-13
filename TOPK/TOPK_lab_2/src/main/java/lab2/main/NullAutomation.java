@@ -1,5 +1,6 @@
 package lab2.main;
 
+import lab2.util.LogInfo;
 import lab2.util.variantNative.Code;
 
 import java.util.Map;
@@ -30,7 +31,7 @@ public class NullAutomation extends Automation {
     }
 
     @Override
-    protected void updateTextPosition(char character) {
+    protected void updateTextPosition(LogInfo logInfo, char character) {
     }
 
     @Override
