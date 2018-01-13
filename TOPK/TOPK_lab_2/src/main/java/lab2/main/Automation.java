@@ -58,7 +58,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         int prevState = currentState;
         if (currentState >= BEGIN_CODE) {
             if (isSignsOrErrors(currentState)) {
-                updateTextPosition(logInfo, character);
+                updateTextPosition(character);
             }
 
             LogInfo copy = logInfo.copy();
@@ -73,7 +73,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         }
 
         if (!isSignsOrErrors(prevState)) {
-            updateTextPosition(getLogInfo(), character);
+            updateTextPosition(character);
         }
 
         return result;
@@ -111,12 +111,12 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
     }
 
 
-    protected void updateTextPosition(LogInfo logInfo, char character) {
+    protected void updateTextPosition(char character) {
         if (character != '\n') {
-            logInfo.column++;
+            getLogInfo().column++;
         } else {
-            logInfo.column = 1;
-            logInfo.row++;
+            getLogInfo().column = 1;
+            getLogInfo().row++;
             log.add(new LogInfo());
         }
     }
