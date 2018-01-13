@@ -93,9 +93,9 @@ public class InputForm extends JPanel {
 
 
             protected void updateLabel() {
-                lblResult.setText(automaton.check(txtInput.getText()).toString().toLowerCase());
+                lblResult.setText(automaton.isValid(txtInput.getText()).toString().toLowerCase());
 
-                switch (automaton.check(txtInput.getText())) {
+                switch (automaton.isValid(txtInput.getText())) {
                     case RIGHT:
                         lblResult.setIcon(UIManager.getIcon("OptionPane.informationIcon"));
                         lblResult.setForeground(Color.GREEN.darker());

@@ -31,7 +31,7 @@ public class FiniteStateAutomaton {
         }});
     }
 
-    public Result check(String string) {
+    public Result isValid(String string) {
         final int resultState = resultState(string);
 
         if (resultState == ERROR_CODE) return Result.WRONG;
