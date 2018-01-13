@@ -25,7 +25,7 @@ public class NullAutomation extends Automation {
     }
 
     @Override
-    protected void validateData(char character) {
+    protected void validateData() {
         currentState = Code.Error.IN_CONSTANT;
     }
 

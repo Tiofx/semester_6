@@ -33,7 +33,7 @@ public class FiniteStateAutomaton {
     }
 
     public Result check(String string) {
-        final int resultState = resultState(string, 0);
+        final int resultState = resultState(string);
 
         if (resultState == ERROR_CODE) return Result.WRONG;
         if (endStates.contains(resultState)) return Result.RIGHT;
@@ -41,7 +41,7 @@ public class FiniteStateAutomaton {
         return Result.ONGOING;
     }
 
-    private int resultState(String string, int startState) {
+    private int resultState(String string) {
         int result = 0;
 
         for (int i = 0; i < string.length(); i++) {

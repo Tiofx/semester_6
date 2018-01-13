@@ -53,7 +53,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
     public boolean sendCharacter(char character) {
         boolean result = super.sendCharacter(character);
 
-        validateData(character);
+        validateData();
 
         int prevState = currentState;
         if (currentState >= BEGIN_CODE) {
@@ -83,7 +83,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         return (state >= SIGNS && state < ERRORS);
     }
 
-    protected void validateData(char character) {
+    protected void validateData() {
         if (currentState >= 14 && currentState <= 19 || currentState == DATA) {
 
             if (currentState == 14 || currentState == 16) {
