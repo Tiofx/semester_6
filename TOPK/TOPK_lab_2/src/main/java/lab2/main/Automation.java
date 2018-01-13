@@ -62,11 +62,10 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
             copy.setAutomationPosition(currentState);
             log.add(copy);
 
-            if (currentState <= DATA) {
-                currentState = 0;
+            int prevCurrentState = currentState;
+            currentState = 0;
+            if (prevCurrentState <= DATA) {
                 return sendCharacter(character);
-            } else {
-                currentState = 0;
             }
         }
 
