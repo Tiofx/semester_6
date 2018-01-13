@@ -130,19 +130,22 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         } catch (ArrayIndexOutOfBoundsException e) {
 
             if (Character.isLetter(character)) {
-                getStateByRowAndSetCurrentStateToIt(Constants.allLettersRowNumber);
+                setCurrentState(getStateByRow(Constants.allLettersRowNumber));
             } else if (Character.isDigit(character)) {
-                getStateByRowAndSetCurrentStateToIt(Constants.allDigitRowNumber);
+                setCurrentState(getStateByRow(Constants.allDigitRowNumber));
             } else {
-                getStateByRowAndSetCurrentStateToIt(Constants.L3RowNumber);
+                setCurrentState(getStateByRow(Constants.L3RowNumber));
             }
         }
     }
 
 
-    private int getStateByRowAndSetCurrentStateToIt(int row) {
-        currentState = transitionTable[row][currentState];
-        return currentState;
+    private void setCurrentState(int value) {
+        currentState = value;
+    }
+
+    private int getStateByRow(int row) {
+        return transitionTable[row][currentState];
     }
 
 
