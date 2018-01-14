@@ -2,7 +2,7 @@ import lab1.main.FiniteStateAutomaton
 import org.junit.Test
 import kotlin.test.assertSame
 
-class TopkLab1Test1 {
+class TopkLab1Test {
 
     companion object {
         private val pattern by lazy {
