@@ -36,12 +36,12 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
                 .mapToObj(i -> (char) i)
                 .forEach(this::sendCharacter);
 
-        if (isEndOfLine(line)) {
+        if (hasNoEndOfLine(line)) {
             sendCharacter('\n');
         }
     }
 
-    private boolean isEndOfLine(String line) {
+    private boolean hasNoEndOfLine(String line) {
         return line.isEmpty() || lastChar(line) != '\n';
     }
 
