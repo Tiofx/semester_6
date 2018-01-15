@@ -30,10 +30,6 @@ public class NullAutomation extends Automation {
     }
 
     @Override
-    protected void updateTextPosition(char character) {
-    }
-
-    @Override
     protected void tryChangeStateBy(char character) throws ArrayIndexOutOfBoundsException {
         currentState = 0;
     }

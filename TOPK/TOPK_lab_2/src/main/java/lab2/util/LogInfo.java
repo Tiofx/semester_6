@@ -2,7 +2,7 @@ package lab2.util;
 
 import lab2.util.variantNative.CodesAnalyser;
 
-public final class LogInfo {
+public class LogInfo {
     public int row;
     public int column;
     protected int automationPosition;
