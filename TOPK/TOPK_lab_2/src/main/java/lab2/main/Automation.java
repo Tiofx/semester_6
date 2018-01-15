@@ -1,6 +1,6 @@
 package lab2.main;
 
-import lab1.main.FiniteStateAutomaton;
+import lab1.main.AbstractFiniteStateAutomaton;
 import lab2.util.LogInfo;
 import lab2.util.variantNative.Constants;
 
@@ -12,7 +12,7 @@ import java.util.Set;
 import static lab2.util.variantNative.Code.*;
 import static lab2.util.variantNative.Code.Error;
 
-public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomaton {
+public class Automation extends AbstractFiniteStateAutomaton {
     protected final List<LogInfo> log = new ArrayList<>();
     protected LogInfo logInfo = new LogInfo();
     protected int mantissa = 0;
