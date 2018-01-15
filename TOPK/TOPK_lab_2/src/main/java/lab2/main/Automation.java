@@ -112,21 +112,18 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
     }
 
 
-    protected void updateTextPosition(char character) {
-        if (character != '\n') {
-            getLogInfo().column++;
-        } else {
-            getLogInfo().column = 1;
-            getLogInfo().row++;
+    private void updateTextPosition(char character) {
+        getLogInfo().updateTextPosition(character);
+        if (character == '\n') {
             log.add(new LogInfo());
         }
     }
 
     @Override
-    protected void tryTransition(char character)
+    protected void tryChangeStateBy(char character)
             throws ArrayIndexOutOfBoundsException {
         try {
-            super.tryTransition(Character.toUpperCase(character));
+            super.tryChangeStateBy(Character.toUpperCase(character));
 
         } catch (ArrayIndexOutOfBoundsException e) {
             setCurrentState(getStateByChar(character));

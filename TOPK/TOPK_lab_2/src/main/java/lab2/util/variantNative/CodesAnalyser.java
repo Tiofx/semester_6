@@ -47,14 +47,12 @@ public class CodesAnalyser {
     }
 
     public String interpret(LogInfo log) {
-        if (notEndOfLine(log)) {
-            return log.toString() + " " + interpret(log.getAutomationPosition());
-        } else {
-            return "\n";
-        }
+        if (isEndOfLine(log)) return "\n";
+
+        return log.toString() + " " + interpret(log.getAutomationPosition());
     }
 
-    private boolean notEndOfLine(LogInfo log) {
-        return !(log.getAutomationPosition() == EOF);
+    private boolean isEndOfLine(LogInfo log) {
+        return log.getAutomationPosition() == EOF;
     }
 }

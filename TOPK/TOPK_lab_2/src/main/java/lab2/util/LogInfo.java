@@ -34,6 +34,15 @@ public final class LogInfo {
         return new LogInfo(row, column, automationPosition);
     }
 
+    public void updateTextPosition(char character) {
+        if (character != '\n') {
+            column++;
+        } else {
+            column = 1;
+            row++;
+        }
+    }
+
     public void reset() {
         row = 1;
         column = 1;

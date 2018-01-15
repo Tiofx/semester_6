@@ -34,7 +34,7 @@ public class NullAutomation extends Automation {
     }
 
     @Override
-    protected void tryTransition(char character) throws ArrayIndexOutOfBoundsException {
+    protected void tryChangeStateBy(char character) throws ArrayIndexOutOfBoundsException {
         currentState = 0;
     }
 }

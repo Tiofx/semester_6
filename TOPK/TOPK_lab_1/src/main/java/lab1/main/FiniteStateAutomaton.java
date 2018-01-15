@@ -81,14 +81,14 @@ public class FiniteStateAutomaton {
 
         public boolean sendCharacter(char character) {
             try {
-                tryTransition(character);
+                tryChangeStateBy(character);
                 return true;
             } catch (ArrayIndexOutOfBoundsException e) {
                 return false;
             }
         }
 
-        protected void tryTransition(char character) throws ArrayIndexOutOfBoundsException {
+        protected void tryChangeStateBy(char character) throws ArrayIndexOutOfBoundsException {
             currentState = transitionTable[alphabet.getOrDefault(character, -1)][currentState];
         }
 
