@@ -78,3 +78,31 @@ open class TopkLab1TestForRefactoring : AbstractTopkLab1Test() {
     }
 
 }
+
+class TopkLab1AdapterTest : AbstractTopkLab1Test() {
+    companion object {
+        private val adapter by lazy {
+            ("(ab)*c+" to "cab+[ca]*").run { "^($first|$second)$" }.let { Adapter(it) }
+        }
+        private val automation by lazy { FiniteStateAutomaton() }
+    }
+
+    override fun assertSameByResult(test: String, expected: FiniteStateAutomaton.Result) {
+        assertSame(expected,
+                automation.check(test),
+                adapter.check(test),
+                test)
+    }
+
+    override fun assertSameByInput(test: String) {
+        assertSame(automation.check(test),
+                adapter.check(test),
+                test)
+    }
+}
+
+
+private fun <T> assertSame(expected: T, actual1: T, actual2: T, message: String) {
+    assertSame(expected, actual1, message)
+    assertSame(expected, actual2, message)
+}
