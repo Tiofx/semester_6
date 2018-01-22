@@ -77,7 +77,7 @@ class TopkLab2Test {
 
 class TestLab2ChainOfResponsibility {
 
-    private val handler: Handler by lazy {
+    private val messageAnalyzer: MessageAnalyzer by lazy {
         listOf(KeyWordMessage(), SignMessage(), ErrorMessage(),
                 ProcMessage(), EndMessage(), IdenMessage(), DataMessage(),
                 EquallyMessage(), CommaMessage(), DoubleAmpersandMessage(),
@@ -95,21 +95,21 @@ class TestLab2ChainOfResponsibility {
                 Code.Sign.EQUALLY, Code.Sign.COMMA, Code.Sign.DOUBLE_AMPERSAND,
                 Code.Error.L3, Code.Error.IN_CHAIN, 1233212)
                 .forEach {
-                    assertTrue("$it : ${codeAnalyzer.interpret(it)} == ${handler.handle(it)}") {
-                        codeAnalyzer.interpret(it) == handler.handle(it)
+                    assertTrue("$it : ${codeAnalyzer.interpret(it)} == ${messageAnalyzer.interpret(it)}") {
+                        codeAnalyzer.interpret(it) == messageAnalyzer.interpret(it)
                     }
                 }
     }
 
 }
 
-private fun List<AbstractHandler>.bindEachToNextHandler() {
+private fun List<AbstractMessageAnalyzer>.bindEachToNextHandler() {
     generateSequence(0) { it + 1 }
             .map { it to it + 1 }
             .takeWhile { it.first <= lastIndex }
             .map { get(it.first) to getOrNull(it.second) }
             .forEach {
-                it.first.handler = it.second ?: NullHandler
+                it.first.nextAnalyser = it.second ?: NullMessageAnalyzer
             }
 }
 

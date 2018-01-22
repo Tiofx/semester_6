@@ -1,8 +1,8 @@
 package lab1.gui;
 
 import lab1.UtilKt;
-import lab1.main.Adapter;
-import lab1.main.FiniteStateAutomatonInterface;
+import lab1.main.RegexAdapter;
+import lab1.main.AutomatonInterface;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -28,7 +28,7 @@ public class InputForm extends JPanel {
     protected final TableModel tableModel = new TableModel();
     protected JFileChooser fileChooser = new JFileChooser();
 
-    protected FiniteStateAutomatonInterface automaton = new Adapter(UtilKt.regexForLab1());
+    protected AutomatonInterface automaton = new RegexAdapter(UtilKt.regexForLab1());
 
     public static void main(String[] args) {
         JOptionPane.showMessageDialog(null,
@@ -115,7 +115,7 @@ public class InputForm extends JPanel {
 
 
             protected void updateLabel() {
-                ((Adapter) automaton).changeRegex(regex.getText());
+                ((RegexAdapter) automaton).changeRegex(regex.getText());
                 InputForm.this.updateLabel();
             }
         });

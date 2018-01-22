@@ -1,14 +1,14 @@
-import lab1.main.Adapter
+import lab1.main.RegexAdapter
 import lab1.main.FiniteStateAutomaton
-import lab1.main.FiniteStateAutomatonInterface
+import lab1.main.AutomatonInterface
 import lab1.regexForLab1
 import org.junit.Test
 import kotlin.test.assertSame
 
 
-infix fun String.matches(automaton: FiniteStateAutomatonInterface) = automaton isValid this
+infix fun String.matches(automaton: AutomatonInterface) = automaton isValid this
 
-infix fun FiniteStateAutomatonInterface.isValid(string: String) =
+infix fun AutomatonInterface.isValid(string: String) =
         check(string) == FiniteStateAutomaton.Result.RIGHT
 
 
@@ -84,7 +84,7 @@ open class TopkLab1TestForRefactoring : AbstractTopkLab1Test() {
 class TopkLab1AdapterTest : AbstractTopkLab1Test() {
     companion object {
         private val adapter by lazy {
-            regexForLab1().let { Adapter(it) }
+            regexForLab1().let { RegexAdapter(it) }
         }
 
         private val automation by lazy { FiniteStateAutomaton() }

@@ -2,7 +2,7 @@ package lab1.main
 
 import lab1.main.FiniteStateAutomaton.Result
 
-class Adapter(regexString: String) : FiniteStateAutomatonInterface {
+class RegexAdapter(regexString: String) : AutomatonInterface {
     private var matcher = getMatcherByRegex(regexString)
 
     fun changeRegex(regexString: String) {

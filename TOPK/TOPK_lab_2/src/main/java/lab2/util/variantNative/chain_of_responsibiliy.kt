@@ -1,63 +1,85 @@
 package lab2.util.variantNative
 
-interface Handler {
-    fun handle(code: Int): String
+interface MessageAnalyzer {
+    fun interpret(code: Int): String
 }
 
-object NullHandler : Handler {
+object NullMessageAnalyzer : MessageAnalyzer {
     val message: String = "Серьезная ошибка: данный код отсутсвтует"
 
-    override fun handle(code: Int) = message
+    override fun interpret(code: Int) = message
 }
 
-abstract class AbstractHandler(
+abstract class AbstractMessageAnalyzer(
         val code: Int,
         val message: String,
-        var handler: Handler
-) : Handler {
+        var nextAnalyser: MessageAnalyzer
+) : MessageAnalyzer {
 
-    override fun handle(code: Int) = if (canHandle(code)) message else handler.handle(code)
+    override fun interpret(code: Int) = if (canInterpret(code)) message else nextAnalyser.interpret(code)
 
-    abstract protected fun canHandle(inputCode: Int): Boolean
+    abstract protected fun canInterpret(inputCode: Int): Boolean
 
 }
 
 open class SpecificMessage(code: Int,
                            message: String,
-                           handler: Handler = NullHandler
-) : AbstractHandler(code, message, handler) {
+                           nextAnalyser: MessageAnalyzer = NullMessageAnalyzer
+) : AbstractMessageAnalyzer(code, message, nextAnalyser) {
 
-    override protected fun canHandle(inputCode: Int) = inputCode == code
+    override protected fun canInterpret(inputCode: Int) = inputCode == code
 }
 
 open class TypeMessage(code: Int,
                        message: String,
-                       handler: Handler = NullHandler
-) : AbstractHandler(code, message, handler) {
+                       nextAnalyser: MessageAnalyzer = NullMessageAnalyzer
+) : AbstractMessageAnalyzer(code, message, nextAnalyser) {
 
-    override fun handle(code: Int) =
-            "${message.takeIf { canHandle(code) } ?: ""}${handler.handle(code)}"
+    override fun interpret(code: Int) =
+            "${message.takeIf { canInterpret(code) } ?: ""}${nextAnalyser.interpret(code)}"
 
-    override protected fun canHandle(inputCode: Int) =
+    override protected fun canInterpret(inputCode: Int) =
             (inputCode % code < 100) and (inputCode - inputCode % code == code)
 }
 
 
-class KeyWordMessage(handler: Handler = NullHandler) : TypeMessage(100, "< ключевое слово > : ", handler)
-class SignMessage(handler: Handler = NullHandler) : TypeMessage(Code.SIGNS, "< знак > : ", handler)
-class ErrorMessage(handler: Handler = NullHandler) : TypeMessage(Code.ERRORS, "Ошибка: ", handler)
+class KeyWordMessage(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : TypeMessage(100, "< ключевое слово > : ", nextAnalyser)
 
-class ProcMessage(handler: Handler = NullHandler) : SpecificMessage(Code.PROC, "PROC", handler)
-class EndMessage(handler: Handler = NullHandler) : SpecificMessage(Code.END, "END", handler)
-class IdenMessage(handler: Handler = NullHandler) : SpecificMessage(Code.IDEN, "Переменная", handler)
-class DataMessage(handler: Handler = NullHandler) : SpecificMessage(Code.DATA, "Константа", handler)
+class SignMessage(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : TypeMessage(Code.SIGNS, "< знак > : ", nextAnalyser)
 
-class EquallyMessage(handler: Handler = NullHandler) : SpecificMessage(Code.Sign.EQUALLY, "[ = ]", handler)
-class CommaMessage(handler: Handler = NullHandler) : SpecificMessage(Code.Sign.COMMA, "[ , ]", handler)
-class DoubleAmpersandMessage(handler: Handler = NullHandler) : SpecificMessage(Code.Sign.DOUBLE_AMPERSAND, "[ && ]", handler)
+class ErrorMessage(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : TypeMessage(Code.ERRORS, "Ошибка: ", nextAnalyser)
 
-class L3Error(handler: Handler = NullHandler) : SpecificMessage(Code.Error.L3, "данного символа нет в алфавите", handler)
-class InChainError(handler: Handler = NullHandler) : SpecificMessage(Code.Error.IN_CHAIN, "некоректный фрагмент цепочки", handler)
+
+class ProcMessage(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : SpecificMessage(Code.PROC, "PROC", nextAnalyser)
+
+class EndMessage(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : SpecificMessage(Code.END, "END", nextAnalyser)
+
+class IdenMessage(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : SpecificMessage(Code.IDEN, "Переменная", nextAnalyser)
+
+class DataMessage(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : SpecificMessage(Code.DATA, "Константа", nextAnalyser)
+
+
+class EquallyMessage(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : SpecificMessage(Code.Sign.EQUALLY, "[ = ]", nextAnalyser)
+
+class CommaMessage(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : SpecificMessage(Code.Sign.COMMA, "[ , ]", nextAnalyser)
+
+class DoubleAmpersandMessage(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : SpecificMessage(Code.Sign.DOUBLE_AMPERSAND, "[ && ]", nextAnalyser)
+
+class L3Error(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : SpecificMessage(Code.Error.L3, "данного символа нет в алфавите", nextAnalyser)
+
+class InChainError(nextAnalyser: MessageAnalyzer = NullMessageAnalyzer)
+    : SpecificMessage(Code.Error.IN_CHAIN, "некоректный фрагмент цепочки", nextAnalyser)
 
 
 

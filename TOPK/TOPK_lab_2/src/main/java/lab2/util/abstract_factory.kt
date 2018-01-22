@@ -114,7 +114,7 @@ class AutomationFactoryLab1 : AbstractAutomationFactory() {
 
 }
 
-class AutomationFactoryNumber21 : AbstractAutomationFactory() {
+class AutomationFactoryLab2 : AbstractAutomationFactory() {
 
     protected val filename = "table.txt"
 

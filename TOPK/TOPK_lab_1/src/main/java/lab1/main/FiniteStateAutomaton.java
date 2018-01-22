@@ -5,9 +5,8 @@ import com.sun.tools.javac.util.List;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
-public class FiniteStateAutomaton implements FiniteStateAutomatonInterface {
+public class FiniteStateAutomaton implements AutomatonInterface {
     public static final int ERROR_CODE = -1;
     private List<Integer> endStates = List.of(3, 6, 7, 8);
 
