@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class FiniteStateAutomaton {
+public class FiniteStateAutomaton implements FiniteStateAutomatonInterface {
     public static final int ERROR_CODE = -1;
     private List<Integer> endStates = List.of(3, 6, 7, 8);
 
@@ -31,7 +31,8 @@ public class FiniteStateAutomaton {
         }});
     }
 
-    public Result isValid(String string) {
+    @Override
+    public Result check(String string) {
         final int resultState = resultState(string);
 
         if (resultState == ERROR_CODE) return Result.WRONG;
