@@ -1,6 +1,6 @@
 package lab2.util.variantNative;
 
-import lab2.util.LogContainer;
+import lab2.util.LogInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +46,13 @@ public class CodesAnalyser {
         return map.getOrDefault(code, "Серьезная ошибка: данный код отсутсвтует");
     }
 
-    public String interpret(LogContainer log) {
-        if (!(log.automationPosition == EOF)) {
-            return log.textPosition.toString() + " " + interpret(log.automationPosition);
-        } else {
-            return "\n";
-        }
+    public String interpret(LogInfo log) {
+        if (isEndOfLine(log)) return "\n";
+
+        return log.toString() + " " + interpret(log.getAutomationPosition());
+    }
+
+    private boolean isEndOfLine(LogInfo log) {
+        return log.getAutomationPosition() == EOF;
     }
 }

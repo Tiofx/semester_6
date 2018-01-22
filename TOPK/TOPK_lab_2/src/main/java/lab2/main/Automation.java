@@ -1,9 +1,7 @@
 package lab2.main;
 
-import lab1.main.FiniteStateAutomaton;
-import lab2.util.LogContainer;
-import lab2.util.TextPosition;
-import lab2.util.variantNative.CodesAnalyser;
+import lab1.main.AbstractFiniteStateAutomaton;
+import lab2.util.LogInfo;
 import lab2.util.variantNative.Constants;
 
 import java.util.ArrayList;
@@ -14,9 +12,9 @@ import java.util.Set;
 import static lab2.util.variantNative.Code.*;
 import static lab2.util.variantNative.Code.Error;
 
-public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomaton {
-    protected final List<LogContainer> log = new ArrayList<>();
-    protected TextPosition textPosition = new TextPosition();
+public class Automation extends AbstractFiniteStateAutomaton {
+    protected final List<LogInfo> log = new ArrayList<>();
+    protected LogInfo logInfo = new LogInfo();
     protected int mantissa = 0;
     protected int exponent = 0;
 
@@ -29,7 +27,7 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
         super(alphabet, transitionTable, firstState, finalState);
     }
 
-    public List<LogContainer> getLog() {
+    public List<LogInfo> getLog() {
         return log;
     }
 
@@ -38,43 +36,59 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
                 .mapToObj(i -> (char) i)
                 .forEach(this::sendCharacter);
 
-        if (line.length() == 0 || line.charAt(line.length() - 1) != '\n') {
+        if (hasNoEndOfLine(line)) {
             sendCharacter('\n');
         }
     }
 
+    private boolean hasNoEndOfLine(String line) {
+        return line.isEmpty() || lastChar(line) != '\n';
+    }
+
+    private static char lastChar(String string) {
+        if (string.isEmpty()) throw new StringIndexOutOfBoundsException("Empty string has no characters");
+        return string.charAt(string.length() - 1);
+    }
 
     @Override
     public boolean sendCharacter(char character) {
         boolean result = super.sendCharacter(character);
 
-        validateData(character);
+        validateData();
 
         int prevState = currentState;
         if (currentState >= BEGIN_CODE) {
-            if (currentState >= SIGNS && currentState < ERRORS) {
+            if (isSignsOrErrors(currentState)) {
                 updateTextPosition(character);
             }
 
-            log.add(new LogContainer(textPosition.copy(), currentState));
+            LogInfo copy = logInfo.copy();
+            copy.setAutomationPosition(currentState);
+            log.add(copy);
 
-            if (currentState <= DATA) {
-                currentState = 0;
-                result = sendCharacter(character);
-                return result;
-            } else {
-                currentState = 0;
+            int prevCurrentState = currentState;
+            currentState = 0;
+            if (prevCurrentState <= DATA) {
+                return sendCharacter(character);
             }
         }
 
-        if (!(prevState >= SIGNS && prevState < ERRORS)) {
+        if (!isSignsOrErrors(prevState)) {
             updateTextPosition(character);
         }
 
         return result;
     }
 
-    protected void validateData(char character) {
+    public LogInfo getLogInfo() {
+        return logInfo;
+    }
+
+    private boolean isSignsOrErrors(int state) {
+        return (state >= SIGNS && state < ERRORS);
+    }
+
+    protected void validateData() {
         if (currentState >= 14 && currentState <= 19 || currentState == DATA) {
 
             if (currentState == 14 || currentState == 16) {
@@ -85,49 +99,68 @@ public class Automation extends FiniteStateAutomaton.AbstractFiniteStateAutomato
                 exponent++;
             }
 
-            if (currentState == DATA && (mantissa > 6 || exponent != 2)) {
+            if (isNotValidConstant()) {
                 currentState = Error.IN_CONSTANT;
             }
         } else {
-            exponent = 0;
-            mantissa = 0;
+            resetFloatNumberInfo();
         }
     }
 
+    private boolean isNotValidConstant() {
+        return currentState == DATA && (mantissa > 6 || exponent != 2);
+    }
 
-    protected void updateTextPosition(char character) {
-        if (character != '\n') {
-            textPosition.column++;
-        } else {
-            textPosition.column = 1;
-            textPosition.row++;
-            log.add(new LogContainer(null, CodesAnalyser.EOF));
+
+    private void updateTextPosition(char character) {
+        getLogInfo().updateTextPosition(character);
+        if (character == '\n') {
+            log.add(new LogInfo());
         }
     }
 
     @Override
-    protected void tryTransition(char character)
+    protected void tryChangeStateBy(char character)
             throws ArrayIndexOutOfBoundsException {
         try {
-            super.tryTransition(Character.toUpperCase(character));
+            super.tryChangeStateBy(Character.toUpperCase(character));
 
         } catch (ArrayIndexOutOfBoundsException e) {
-
-            if (Character.isLetter(character)) {
-                currentState = transitionTable[Constants.allLettersRowNumber][currentState];
-            } else if (Character.isDigit(character)) {
-                currentState = transitionTable[Constants.allDigitRowNumber][currentState];
-            } else {
-                currentState = transitionTable[Constants.L3RowNumber][currentState];
-            }
+            setCurrentState(getStateByChar(character));
         }
     }
+
+    private int getStateByChar(char character) {
+        if (Character.isLetter(character)) {
+            return getStateByRow(Constants.allLettersRowNumber);
+
+        } else if (Character.isDigit(character)) {
+            return getStateByRow(Constants.allDigitRowNumber);
+
+        } else {
+            return getStateByRow(Constants.L3RowNumber);
+        }
+    }
+
+
+    private void setCurrentState(int value) {
+        currentState = value;
+    }
+
+    private int getStateByRow(int row) {
+        return transitionTable[row][currentState];
+    }
+
 
     @Override
     public void reset() {
         super.reset();
         log.clear();
-        textPosition.reset();
+        logInfo.reset();
+        resetFloatNumberInfo();
+    }
+
+    private void resetFloatNumberInfo() {
         mantissa = 0;
         exponent = 0;
     }

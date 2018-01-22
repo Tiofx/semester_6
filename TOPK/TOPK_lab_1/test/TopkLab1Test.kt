@@ -54,7 +54,7 @@ class TopkLab1Test {
     }
 
     private fun assertSame(test: String, expected: FiniteStateAutomaton.Result) {
-        assertSame(expected, automation.check(test), "wrong test: [$test]")
+        assertSame(expected, automation.isValid(test), "wrong test: [$test]")
     }
 
     private fun assertSame(test: String) {
@@ -65,4 +65,4 @@ class TopkLab1Test {
 infix fun String.matches(automaton: FiniteStateAutomaton) = automaton isValid this
 
 infix fun FiniteStateAutomaton.isValid(string: String) =
-        check(string) == FiniteStateAutomaton.Result.RIGHT
+        isValid(string) == FiniteStateAutomaton.Result.RIGHT

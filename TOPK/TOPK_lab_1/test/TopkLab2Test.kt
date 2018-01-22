@@ -1,4 +1,5 @@
 import lab2.util.AutomationFactory
+import lab2.util.LogInfo
 import lab2.util.variantNative.Code
 import org.junit.Test
 import kotlin.test.assertTrue
@@ -67,8 +68,13 @@ class TopkLab2Test {
     private fun testOneWord(word: String, expectedCode: Int) = automation.run {
         sendLine(word)
         assertTrue("problem in $word") {
-            log[0].automationPosition == expectedCode
+            log[0] equalTo LogInfo(1, word.trimEnd().length + 1, expectedCode)
         }
         reset()
     }
+}
+
+infix fun LogInfo.notEqualTo(logInfo: LogInfo) = !(this equalTo logInfo)
+infix fun LogInfo.equalTo(logInfo: LogInfo) = logInfo.let {
+    (row == it.row) and (column == it.column) and (automationPosition == it.automationPosition)
 }

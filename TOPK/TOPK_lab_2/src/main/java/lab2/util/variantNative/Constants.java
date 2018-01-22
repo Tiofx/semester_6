@@ -7,3 +7,4 @@ public interface Constants {
     int allDigitRowNumber = 8;
     int L3RowNumber = 23;
 }
+
