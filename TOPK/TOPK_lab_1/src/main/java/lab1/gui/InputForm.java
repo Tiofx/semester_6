@@ -1,6 +1,7 @@
 package lab1.gui;
 
-import lab1.main.FiniteStateAutomaton;
+import lab1.UtilKt;
+import lab1.main.Adapter;
 import lab1.main.FiniteStateAutomatonInterface;
 
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class InputForm extends JPanel {
     protected final TableModel tableModel = new TableModel();
     protected JFileChooser fileChooser = new JFileChooser();
 
-    protected FiniteStateAutomatonInterface automaton = new FiniteStateAutomaton();
+    protected FiniteStateAutomatonInterface automaton = new Adapter(UtilKt.regexForLab1());
 
     public static void main(String[] args) {
         JOptionPane.showMessageDialog(null,
