@@ -13,17 +13,17 @@ public class CodesAnalyser {
 
     public CodesAnalyser() {
         map = new HashMap<Integer, String>() {{
-            put(PROC, "Служебное слово PROC");
-            put(END, "Служебное слово END");
+            put(PROC, "< ключевое слово > : PROC");
+            put(END, "< ключевое слово > : END");
             put(IDEN, "Переменная");
             put(DATA, "Константа");
 
-            put(Sign.EQUALLY, "Знак [ = ]");
-            put(Sign.COMMA, "Знак [ , ]");
-            put(Sign.DOUBLE_AMPERSAND, "Знак [ && ]");
-            put(Sign.DOUBLE_EXCLAMATION_POINT, "Знак [ !! ]");
-            put(Sign.LEFT_SHIFT, "Знак [ << ]");
-            put(Sign.RIGHT_SHIFT, "Знак [ >> ]");
+            put(Sign.EQUALLY, "< знак > : [ = ]");
+            put(Sign.COMMA, "< знак > : [ , ]");
+            put(Sign.DOUBLE_AMPERSAND, "< знак > : [ && ]");
+            put(Sign.DOUBLE_EXCLAMATION_POINT, "< знак > : [ !! ]");
+            put(Sign.LEFT_SHIFT, "< знак > : [ << ]");
+            put(Sign.RIGHT_SHIFT, "< знак > : [ >> ]");
 
 //            put(Sign.SPACE, "Оператор [   ]");
 //            put(Sign.NEW_LINE, "Оператор [ \\n ]");
