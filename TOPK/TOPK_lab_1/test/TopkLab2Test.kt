@@ -1,6 +1,6 @@
 import lab2.util.AutomationFactory
 import lab2.util.LogInfo
-import lab2.util.variantNative.Code
+import lab2.util.variantNative.*
 import org.junit.Test
 import kotlin.test.assertTrue
 
@@ -72,6 +72,45 @@ class TopkLab2Test {
         }
         reset()
     }
+}
+
+
+class TestLab2ChainOfResponsibility {
+
+    private val handler: Handler by lazy {
+        listOf(KeyWordMessage(), SignMessage(), ErrorMessage(),
+                ProcMessage(), EndMessage(), IdenMessage(), DataMessage(),
+                EquallyMessage(), CommaMessage(), DoubleAmpersandMessage(),
+                L3Error(), InChainError()
+        )
+                .apply { bindEachToNextHandler() }
+                .first()
+    }
+
+    private val codeAnalyzer by lazy { CodesAnalyser() }
+
+    @Test
+    fun test() {
+        listOf(Code.PROC, Code.END, Code.IDEN, Code.DATA,
+                Code.Sign.EQUALLY, Code.Sign.COMMA, Code.Sign.DOUBLE_AMPERSAND,
+                Code.Error.L3, Code.Error.IN_CHAIN, 1233212)
+                .forEach {
+                    assertTrue("$it : ${codeAnalyzer.interpret(it)} == ${handler.handle(it)}") {
+                        codeAnalyzer.interpret(it) == handler.handle(it)
+                    }
+                }
+    }
+
+}
+
+private fun List<AbstractHandler>.bindEachToNextHandler() {
+    generateSequence(0) { it + 1 }
+            .map { it to it + 1 }
+            .takeWhile { it.first <= lastIndex }
+            .map { get(it.first) to getOrNull(it.second) }
+            .forEach {
+                it.first.handler = it.second ?: NullHandler
+            }
 }
 
 infix fun LogInfo.notEqualTo(logInfo: LogInfo) = !(this equalTo logInfo)
