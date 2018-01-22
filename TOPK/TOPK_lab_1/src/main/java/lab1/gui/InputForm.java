@@ -23,6 +23,7 @@ public class InputForm extends JPanel {
     private JButton btnAdd;
     private JTable tableData;
     private JButton btnClear;
+    private JTextField regex;
 
     protected final TableModel tableModel = new TableModel();
     protected JFileChooser fileChooser = new JFileChooser();
@@ -50,6 +51,7 @@ public class InputForm extends JPanel {
 
         txtInput.setText("a");
         txtInput.setText("");
+        regex.setText(UtilKt.regexForLab1());
     }
 
     private void addListeners() {
@@ -93,27 +95,50 @@ public class InputForm extends JPanel {
                 updateLabel();
             }
 
+        });
+
+        regex.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateLabel();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateLabel();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateLabel();
+            }
+
 
             protected void updateLabel() {
-                lblResult.setText(automaton.check(txtInput.getText()).toString().toLowerCase());
-
-                switch (automaton.check(txtInput.getText())) {
-                    case RIGHT:
-                        lblResult.setIcon(UIManager.getIcon("OptionPane.informationIcon"));
-                        lblResult.setForeground(Color.GREEN.darker());
-                        break;
-                    case WRONG:
-                        lblResult.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
-                        lblResult.setForeground(Color.RED.darker());
-                        break;
-                    case ONGOING:
-                        lblResult.setIcon(UIManager.getIcon("OptionPane.warningIcon"));
-                        lblResult.setForeground(Color.YELLOW.darker());
-                        break;
-                    default:
-                        throw new IllegalArgumentException();
-                }
+                ((Adapter) automaton).changeRegex(regex.getText());
+                InputForm.this.updateLabel();
             }
         });
+    }
+
+    protected void updateLabel() {
+        lblResult.setText(automaton.check(txtInput.getText()).toString().toLowerCase());
+
+        switch (automaton.check(txtInput.getText())) {
+            case RIGHT:
+                lblResult.setIcon(UIManager.getIcon("OptionPane.informationIcon"));
+                lblResult.setForeground(Color.GREEN.darker());
+                break;
+            case WRONG:
+                lblResult.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
+                lblResult.setForeground(Color.RED.darker());
+                break;
+            case ONGOING:
+                lblResult.setIcon(UIManager.getIcon("OptionPane.warningIcon"));
+                lblResult.setForeground(Color.YELLOW.darker());
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 }
