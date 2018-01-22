@@ -1,6 +1,7 @@
 import lab1.main.Adapter
 import lab1.main.FiniteStateAutomaton
 import lab1.main.FiniteStateAutomatonInterface
+import lab1.regexForLab1
 import org.junit.Test
 import kotlin.test.assertSame
 
@@ -64,9 +65,10 @@ abstract class AbstractTopkLab1Test : ITopkLab1Test {
 open class TopkLab1TestForRefactoring : AbstractTopkLab1Test() {
     companion object {
         private val pattern by lazy {
-            ("(ab)*c+" to "cab+[ca]*").run { "^($first|$second)$" }.toRegex()
+            regexForLab1().toRegex()
         }
         private val automation by lazy { FiniteStateAutomaton() }
+
     }
 
     override fun assertSameByResult(test: String, expected: FiniteStateAutomaton.Result) {
@@ -76,14 +78,15 @@ open class TopkLab1TestForRefactoring : AbstractTopkLab1Test() {
     override fun assertSameByInput(test: String) {
         assertSame(test matches pattern, test matches automation, test)
     }
-
 }
+
 
 class TopkLab1AdapterTest : AbstractTopkLab1Test() {
     companion object {
         private val adapter by lazy {
-            ("(ab)*c+" to "cab+[ca]*").run { "^($first|$second)$" }.let { Adapter(it) }
+            regexForLab1().let { Adapter(it) }
         }
+
         private val automation by lazy { FiniteStateAutomaton() }
     }
 
