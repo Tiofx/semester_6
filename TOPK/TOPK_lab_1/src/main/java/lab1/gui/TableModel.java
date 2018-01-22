@@ -22,7 +22,7 @@ public class TableModel extends DefaultTableModel {
         if (column != 1) {
             return dataVector.get(row);
         } else {
-            return "[ RESULT: " + automaton.isValid(dataVector.get(row).toString()).toString().toLowerCase() + " ]";
+            return "[ RESULT: " + automaton.check(dataVector.get(row).toString()).toString().toLowerCase() + " ]";
         }
     }
 

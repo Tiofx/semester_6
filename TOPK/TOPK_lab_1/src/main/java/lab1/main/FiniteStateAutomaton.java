@@ -32,7 +32,7 @@ public class FiniteStateAutomaton implements FiniteStateAutomatonInterface {
     }
 
     @Override
-    public Result isValid(String string) {
+    public Result check(String string) {
         final int resultState = resultState(string);
 
         if (resultState == ERROR_CODE) return Result.WRONG;
