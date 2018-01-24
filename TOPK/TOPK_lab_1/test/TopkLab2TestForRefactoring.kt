@@ -1,15 +1,10 @@
-import lab2.util.AutomationFactory
-import lab2.util.LogInfo
+import jdk.nashorn.internal.runtime.regexp.joni.Config.log
+import lab2.util.*
 import lab2.util.variantNative.*
 import org.junit.Test
 import kotlin.test.assertTrue
 
-class TopkLab2Test {
-
-    companion object {
-        private val automation by lazy { AutomationFactory.createAutomation(21) }
-    }
-
+abstract class AbstractTopkLab2Test {
     @Test
     fun testProc() {
         listOf("proc", "Proc", "PROC", "PrOc", "proc ", "  PRoc")
@@ -64,8 +59,16 @@ class TopkLab2Test {
                 .forEach { testOneWord(it, Code.Error.IN_CONSTANT) }
     }
 
+    abstract protected fun testOneWord(word: String, expectedCode: Int)
+}
 
-    private fun testOneWord(word: String, expectedCode: Int) = automation.run {
+class TopkLab2TestForRefactoring : AbstractTopkLab2Test() {
+
+    companion object {
+        private val automation by lazy { AutomationFactory.createAutomation(21) }
+    }
+
+    protected override fun testOneWord(word: String, expectedCode: Int) = automation.run {
         sendLine(word)
         assertTrue("problem in $word") {
             log[0] equalTo LogInfo(1, word.trimEnd().length + 1, expectedCode)
@@ -101,6 +104,20 @@ class TestLab2ChainOfResponsibility {
                 }
     }
 
+}
+
+class TestLab2AbstractFactory : AbstractTopkLab2Test() {
+    private val factory: AbstractAutomationFactory by lazy { AutomationFactoryLab2() }
+
+    override fun testOneWord(word: String, expectedCode: Int) {
+        factory.createAutomation().run {
+            sendLine(word)
+            assertTrue("problem in $word") {
+                log[0] equalTo LogInfo(1, word.trimEnd().length + 1, expectedCode)
+            }
+            reset()
+        }
+    }
 }
 
 private fun List<AbstractMessageAnalyzer>.bindEachToNextHandler() {
